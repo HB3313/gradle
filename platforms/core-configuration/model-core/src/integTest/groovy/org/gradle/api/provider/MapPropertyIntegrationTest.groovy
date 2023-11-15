@@ -708,4 +708,22 @@ task thing {
             [false, true]
         ].combinations()
     }
+
+    def "self-referential map property"() {
+        buildFile.delete()
+
+        buildKotlinFile << """
+        val myMap: MapProperty<String, String> = objects.mapProperty()
+        val myLazyProp = provider {
+            myMap.getting("foo").getOrElse("not_there")
+        }
+        myMap.put("bar", myLazyProp.map { "barbar" })
+        myLazyProp.get()
+
+        tasks.register("verify") {}
+        """
+
+        expect:
+        fails "verify"
+    }
 }
