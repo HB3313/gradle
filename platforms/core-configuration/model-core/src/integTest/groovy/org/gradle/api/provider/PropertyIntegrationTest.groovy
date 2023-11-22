@@ -972,7 +972,7 @@ project.extensions.create("some", SomeExtension)
         """
 
         expect:
-        fails "myTask"
+        fails "myTask", "--stacktrace"
 
         where:
         selfReference                                 || _
@@ -1002,6 +1002,22 @@ project.extensions.create("some", SomeExtension)
         """
 
         expect:
-        fails "myTask"
+        fails "myTask", "--stacktrace"
+    }
+
+    def "self-referential provider in standalone property is detected"() {
+        buildFile """
+            tasks.register("myTask") {
+                def prop = objects.property(String)
+                prop.set(prop.map { "newValue" })
+
+                doLast {
+                    println("prop = \${prop.get()}")
+                }
+            }
+        """
+
+        expect:
+        fails "myTask", "--stacktrace"
     }
 }

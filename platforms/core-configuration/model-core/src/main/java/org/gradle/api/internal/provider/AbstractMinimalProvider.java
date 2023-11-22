@@ -208,4 +208,12 @@ public abstract class AbstractMinimalProvider<T> implements ProviderInternal<T>,
         }
         return formatter.toString();
     }
+
+    protected final <R, E extends Exception> R evaluate(EvaluationContext.ScopedEvaluation<? extends R, E> evaluation) throws E {
+        return EvaluationContext.getInstance().evaluate(this, evaluation);
+    }
+
+    protected final <E extends Exception> String safeToString(EvaluationContext.ScopedEvaluation<String, E> evaluation) throws E {
+        return EvaluationContext.getInstance().tryEvaluate(this, "CIRCULAR REFERENCE", evaluation);
+    }
 }

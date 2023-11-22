@@ -724,6 +724,6 @@ task thing {
         """
 
         expect:
-        fails "verify"
+        fails "verify", "--stacktrace"
     }
 }
