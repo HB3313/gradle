@@ -17,8 +17,6 @@
 package org.gradle.api.problems;
 
 import org.gradle.api.Incubating;
-import org.gradle.internal.service.scopes.Scope;
-import org.gradle.internal.service.scopes.ServiceScope;
 
 /**
  * Problems API service.
@@ -30,8 +28,8 @@ import org.gradle.internal.service.scopes.ServiceScope;
  * @since 8.4
  */
 @Incubating
-@ServiceScope(Scope.Global.class)
 public interface Problems {
+
     /**
      * Configures a new problem with error severity, reports it and uses it to throw a new exception.
      * <p>

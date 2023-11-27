@@ -48,7 +48,7 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.mapping;
 import static org.gradle.api.problems.Severity.ERROR;
 import static org.gradle.api.problems.Severity.WARNING;
-import static org.gradle.api.problems.internal.DefaultProblemCategory.VALIDATION;
+import static org.gradle.api.problems.internal.DefaultProblemCategory.CATEGORY_VALIDATION;
 import static org.gradle.internal.deprecation.Documentation.userManual;
 
 public class ValidateStep<C extends BeforeExecutionContext, R extends Result> implements Step<C, R> {
@@ -140,7 +140,7 @@ public class ValidateStep<C extends BeforeExecutionContext, R extends Result> im
                 .typeIsIrrelevantInErrorMessage()
                 .label(unknownImplSnapshot.getProblemDescription())
                 .documentedAt(userManual("validation_problems", "implementation_unknown"))
-                .category(VALIDATION, "property", TextUtil.screamingSnakeToKebabCase(UNKNOWN_IMPLEMENTATION))
+                .category(CATEGORY_VALIDATION, "property", TextUtil.screamingSnakeToKebabCase(UNKNOWN_IMPLEMENTATION))
                 .details(unknownImplSnapshot.getReasonDescription())
                 .solution(unknownImplSnapshot.getSolutionDescription())
                 .severity(ERROR)
@@ -155,7 +155,7 @@ public class ValidateStep<C extends BeforeExecutionContext, R extends Result> im
                 .typeIsIrrelevantInErrorMessage()
                 .label(descriptionPrefix + work + " " + unknownImplSnapshot.getProblemDescription())
                 .documentedAt(userManual("validation_problems", "implementation_unknown"))
-                .category(VALIDATION, "property", TextUtil.screamingSnakeToKebabCase(UNKNOWN_IMPLEMENTATION))
+                .category(CATEGORY_VALIDATION, "property", TextUtil.screamingSnakeToKebabCase(UNKNOWN_IMPLEMENTATION))
                 .details(unknownImplSnapshot.getReasonDescription())
                 .solution(unknownImplSnapshot.getSolutionDescription())
                 .severity(ERROR)

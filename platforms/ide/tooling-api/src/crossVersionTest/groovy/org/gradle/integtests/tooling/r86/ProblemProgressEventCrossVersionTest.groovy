@@ -98,6 +98,7 @@ class ProblemProgressEventCrossVersionTest extends ToolingApiSpecification {
         given:
         buildFile << """
             import org.gradle.api.problems.Problem
+            import org.gradle.api.problems.ProblemsServiceAccessor
             import org.gradle.api.problems.Severity
             import org.gradle.internal.deprecation.Documentation
 
@@ -123,11 +124,11 @@ class ProblemProgressEventCrossVersionTest extends ToolingApiSpecification {
 
             abstract class ProblemReportingTask extends DefaultTask {
                 @Inject
-                protected abstract Problems getProblems();
+                protected abstract ProblemsServiceAccessor getProblems();
 
                 @TaskAction
                 void run() {
-                    problems.create {
+                    Problems problems = getProblems().withPluginNamespace("org.example.plugin").get().create {
                         it.label("shortProblemMessage")
                         $documentationConfig
                         .fileLocation("/tmp/foo", 1, 2, 3)
@@ -154,7 +155,7 @@ class ProblemProgressEventCrossVersionTest extends ToolingApiSpecification {
 
         then:
         problems.size() == 1
-        problems[0].category.namespace == 'main' // TODO this is a bug; see https://github.com/gradle/gradle/issues/27123
+        problems[0].category.namespace == 'gradle-plugin:org.example.plugin'
         problems[0].category.category == 'main'
         problems[0].category.subCategories == ['sub','id']
         problems[0].additionalData.asMap == ['aKey' : 'aValue']

@@ -19,6 +19,7 @@ package org.gradle.api.problems.internal;
 import org.gradle.api.problems.BasicProblemBuilder;
 import org.gradle.api.problems.DocLink;
 import org.gradle.api.problems.Problem;
+import org.gradle.api.problems.ProblemCategory;
 import org.gradle.api.problems.Severity;
 import org.gradle.api.problems.locations.FileLocation;
 import org.gradle.api.problems.locations.PluginIdLocation;
@@ -37,8 +38,9 @@ import java.util.Map;
 
 public class DefaultBasicProblemBuilder implements BasicProblemBuilder {
 
+    private final String namespace;
     private String label;
-    private String problemCategory;
+    private ProblemCategory problemCategory;
     private Severity severity;
     private List<ProblemLocation> locations;
     private String details;
@@ -52,7 +54,7 @@ public class DefaultBasicProblemBuilder implements BasicProblemBuilder {
 
     public DefaultBasicProblemBuilder(Problem problem) {
         this.label = problem.getLabel();
-        this.problemCategory = problem.getProblemCategory().toString();
+        this.problemCategory = problem.getProblemCategory();
         this.severity = problem.getSeverity();
         this.locations = new ArrayList<ProblemLocation>(problem.getLocations());
         this.details = problem.getDetails();
@@ -65,9 +67,11 @@ public class DefaultBasicProblemBuilder implements BasicProblemBuilder {
         if (problem instanceof DefaultProblem) {
             this.currentOperationId = ((DefaultProblem) problem).getBuildOperationId();
         }
+        this.namespace = problem.getProblemCategory().getNamespace();
     }
 
-    public DefaultBasicProblemBuilder() {
+    public DefaultBasicProblemBuilder(String namespace) {
+        this.namespace = namespace;
         this.locations = new ArrayList<ProblemLocation>();
         this.additionalData = new HashMap<String, Object>();
     }
@@ -178,7 +182,7 @@ public class DefaultBasicProblemBuilder implements BasicProblemBuilder {
 
     @Override
     public BasicProblemBuilder category(String category, String... details){
-        this.problemCategory = DefaultProblemCategory.category(category, details).toString();
+        this.problemCategory = DefaultProblemCategory.create(namespace, category, details);
         return this;
     }
 
@@ -217,7 +221,7 @@ public class DefaultBasicProblemBuilder implements BasicProblemBuilder {
         return label;
     }
 
-    protected String getProblemCategory() {
+    protected ProblemCategory getProblemCategory() {
         return problemCategory;
     }
 

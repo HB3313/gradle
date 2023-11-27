@@ -34,7 +34,8 @@ public class DefaultReportableProblemBuilder extends DefaultBasicProblemBuilder 
 
     private final InternalProblems problemsService;
 
-    public DefaultReportableProblemBuilder(InternalProblems problemsService) {
+    public DefaultReportableProblemBuilder(InternalProblems problemsService, String namespace) {
+        super(namespace);
         this.problemsService = problemsService;
 
     }

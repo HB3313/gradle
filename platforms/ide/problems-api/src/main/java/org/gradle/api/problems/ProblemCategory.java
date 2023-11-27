@@ -44,9 +44,6 @@ import java.util.List;
  */
 @Incubating
 public interface ProblemCategory {
-    boolean hasPluginId();
-
-    String getPluginId();
 
     String getNamespace();
 
