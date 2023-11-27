@@ -64,7 +64,7 @@ public abstract class AbstractProperty<T, S extends ValueSupplier> extends Abstr
     public boolean calculatePresence(ValueConsumer consumer) {
         beforeRead(producer, consumer);
         try {
-            return getSupplier().calculatePresence(consumer);
+            return evaluate(() -> getSupplier().calculatePresence(consumer));
         } catch (Exception e) {
             if (displayName != null) {
                 throw new PropertyQueryException(String.format("Failed to query the value of %s.", displayName), e);
@@ -184,7 +184,7 @@ public abstract class AbstractProperty<T, S extends ValueSupplier> extends Abstr
         if (task != null) {
             return ValueProducer.task(task);
         } else {
-            return getSupplier().getProducer();
+            return evaluate(() -> getSupplier().getProducer());
         }
     }
 
