@@ -186,12 +186,12 @@ public abstract class AbstractCollectionProperty<T, C extends Collection<T>> ext
 
     @Override
     protected Value<? extends C> calculateValueFrom(CollectionSupplier<T, C> value, ValueConsumer consumer) {
-        return value.calculateValue(consumer);
+        return evaluate(() -> value.calculateValue(consumer));
     }
 
     @Override
     protected CollectionSupplier<T, C> finalValue(CollectionSupplier<T, C> value, ValueConsumer consumer) {
-        Value<? extends C> result = value.calculateValue(consumer);
+        Value<? extends C> result = evaluate(() -> value.calculateValue(consumer));
         if (!result.isMissing()) {
             return new FixedSupplier<>(result.getWithoutSideEffect(), Cast.uncheckedCast(result.getSideEffect()));
         } else if (result.getPathToOrigin().isEmpty()) {
@@ -203,7 +203,7 @@ public abstract class AbstractCollectionProperty<T, C extends Collection<T>> ext
 
     @Override
     protected ExecutionTimeValue<? extends C> calculateOwnExecutionTimeValue(CollectionSupplier<T, C> value) {
-        return value.calculateExecutionTimeValue();
+        return evaluate(value::calculateExecutionTimeValue);
     }
 
     @Override
@@ -224,7 +224,7 @@ public abstract class AbstractCollectionProperty<T, C extends Collection<T>> ext
 
     @Override
     protected String describeContents() {
-        return String.format("%s(%s, %s)", collectionType.getSimpleName().toLowerCase(), elementType, getSupplier().toString());
+        return String.format("%s(%s, %s)", collectionType.getSimpleName().toLowerCase(), elementType, getSupplier());
     }
 
     static class NoValueSupplier<T, C extends Collection<? extends T>> implements CollectionSupplier<T, C> {

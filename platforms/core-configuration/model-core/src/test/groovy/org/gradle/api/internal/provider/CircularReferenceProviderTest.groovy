@@ -18,7 +18,7 @@ package org.gradle.api.internal.provider
 
 import groovy.transform.MapConstructor
 import org.gradle.api.Transformer
-import org.gradle.api.provider.Property
+import org.gradle.api.provider.HasConfigurableValue
 import org.gradle.api.provider.Provider
 import org.gradle.api.specs.Spec
 import org.gradle.util.TestUtil
@@ -99,7 +99,7 @@ class CircularReferenceProviderTest extends Specification {
 
     def "detects circular reference for #testName when calling finalizeValue"(
         String testName,
-        Property<?> property
+        HasConfigurableValue property
     ) {
         when:
         property.finalizeValue()
@@ -111,7 +111,13 @@ class CircularReferenceProviderTest extends Specification {
         where:
         [testName, property] << [
             createSelfReferencingProperty(),
-            createPropertyWithSelfAsConvention()
+            createPropertyWithSelfAsConvention(),
+            createSelfReferencingMapProperty(),
+            createMapPropertyWithSelfAsConvention(),
+            createSelfReferencingListProperty(),
+            createListPropertyWithSelfAsConvention(),
+            createSelfReferencingSetProperty(),
+            createSetPropertyWithSelfAsConvention(),
         ].collect { [it.testCaseName, it.provider] }
     }
 
@@ -126,6 +132,12 @@ class CircularReferenceProviderTest extends Specification {
             createSelfReferencingFilterProvider(),
             createSelfReferencingProperty(),
             createPropertyWithSelfAsConvention(),
+            createSelfReferencingMapProperty(),
+            createMapPropertyWithSelfAsConvention(),
+            createSelfReferencingListProperty(),
+            createListPropertyWithSelfAsConvention(),
+            createSelfReferencingSetProperty(),
+            createSetPropertyWithSelfAsConvention(),
         ]
     }
 
@@ -272,6 +284,96 @@ class CircularReferenceProviderTest extends Specification {
         property.convention(property)
         return new TestCases(
             testCaseName: "property with self as convention",
+            provider: property as ProviderInternal<?>,
+            throwing: [
+                GET, CALCULATE_VALUE, CALCULATE_PRESENCE, CALCULATE_EXECUTION_TIME_VALUE, GET_PRODUCER, WITH_FINAL_VALUE
+            ],
+            notThrowing: [
+                TO_STRING
+            ]
+        )
+    }
+
+    static TestCases createSelfReferencingMapProperty() {
+        def property = TestUtil.objectFactory().mapProperty(String, String)
+        property.set(property)
+        return new TestCases(
+            testCaseName: "map property",
+            provider: property as ProviderInternal<?>,
+            throwing: [
+                GET, CALCULATE_VALUE, CALCULATE_PRESENCE, CALCULATE_EXECUTION_TIME_VALUE, GET_PRODUCER, WITH_FINAL_VALUE
+            ],
+            notThrowing: [
+                TO_STRING
+            ]
+        )
+    }
+
+    static TestCases createMapPropertyWithSelfAsConvention() {
+        def property = TestUtil.objectFactory().mapProperty(String, String)
+        property.convention(property)
+        return new TestCases(
+            testCaseName: "map property with self as convention",
+            provider: property as ProviderInternal<?>,
+            throwing: [
+                GET, CALCULATE_VALUE, CALCULATE_PRESENCE, CALCULATE_EXECUTION_TIME_VALUE, GET_PRODUCER, WITH_FINAL_VALUE
+            ],
+            notThrowing: [
+                TO_STRING
+            ]
+        )
+    }
+
+    static TestCases createSelfReferencingListProperty() {
+        def property = TestUtil.objectFactory().listProperty(String)
+        property.set(property)
+        return new TestCases(
+            testCaseName: "list property",
+            provider: property as ProviderInternal<?>,
+            throwing: [
+                GET, CALCULATE_VALUE, CALCULATE_PRESENCE, CALCULATE_EXECUTION_TIME_VALUE, GET_PRODUCER, WITH_FINAL_VALUE
+            ],
+            notThrowing: [
+                TO_STRING
+            ]
+        )
+    }
+
+    static TestCases createListPropertyWithSelfAsConvention() {
+        def property = TestUtil.objectFactory().listProperty(String)
+        property.convention(property)
+        return new TestCases(
+            testCaseName: "list property with self as convention",
+            provider: property as ProviderInternal<?>,
+            throwing: [
+                GET, CALCULATE_VALUE, CALCULATE_PRESENCE, CALCULATE_EXECUTION_TIME_VALUE, GET_PRODUCER, WITH_FINAL_VALUE
+            ],
+            notThrowing: [
+                TO_STRING
+            ]
+        )
+    }
+
+    static TestCases createSelfReferencingSetProperty() {
+        def property = TestUtil.objectFactory().setProperty(String)
+        property.set(property)
+        return new TestCases(
+            testCaseName: "set property",
+            provider: property as ProviderInternal<?>,
+            throwing: [
+                GET, CALCULATE_VALUE, CALCULATE_PRESENCE, CALCULATE_EXECUTION_TIME_VALUE, GET_PRODUCER, WITH_FINAL_VALUE
+            ],
+            notThrowing: [
+                TO_STRING
+            ]
+        )
+    }
+
+    static TestCases createSetPropertyWithSelfAsConvention() {
+        def property = TestUtil.objectFactory().setProperty(String)
+        property.convention(property)
+        return new TestCases(
+            testCaseName: "set property with self as convention",
             provider: property as ProviderInternal<?>,
             throwing: [
                 GET, CALCULATE_VALUE, CALCULATE_PRESENCE, CALCULATE_EXECUTION_TIME_VALUE, GET_PRODUCER, WITH_FINAL_VALUE

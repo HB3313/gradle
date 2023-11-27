@@ -239,12 +239,12 @@ public class DefaultMapProperty<K, V> extends AbstractProperty<Map<K, V>, MapSup
 
     @Override
     protected Value<? extends Map<K, V>> calculateValueFrom(MapSupplier<K, V> value, ValueConsumer consumer) {
-        return value.calculateValue(consumer);
+        return evaluate(() -> value.calculateValue(consumer));
     }
 
     @Override
     protected MapSupplier<K, V> finalValue(MapSupplier<K, V> value, ValueConsumer consumer) {
-        Value<? extends Map<K, V>> result = value.calculateValue(consumer);
+        Value<? extends Map<K, V>> result = evaluate(() -> value.calculateValue(consumer));
         if (!result.isMissing()) {
             return new FixedSupplier<>(result.getWithoutSideEffect(), uncheckedCast(result.getSideEffect()));
         } else if (result.getPathToOrigin().isEmpty()) {
@@ -256,7 +256,7 @@ public class DefaultMapProperty<K, V> extends AbstractProperty<Map<K, V>, MapSup
 
     @Override
     protected ExecutionTimeValue<? extends Map<K, V>> calculateOwnExecutionTimeValue(MapSupplier<K, V> value) {
-        return value.calculateOwnExecutionTimeValue();
+        return evaluate(value::calculateOwnExecutionTimeValue);
     }
 
     private class EntryProvider extends AbstractMinimalProvider<V> {
