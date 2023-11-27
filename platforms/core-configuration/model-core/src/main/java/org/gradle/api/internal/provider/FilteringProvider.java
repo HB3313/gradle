@@ -77,7 +77,7 @@ public class FilteringProvider<T> extends AbstractMinimalProvider<T> {
             return value.asType();
         }
         T unpackedValue = value.getWithoutSideEffect();
-        if (spec.isSatisfiedBy(unpackedValue)) {
+        if (evaluate(() -> spec.isSatisfiedBy(unpackedValue))) {
             return value;
         } else {
             return Value.missing();

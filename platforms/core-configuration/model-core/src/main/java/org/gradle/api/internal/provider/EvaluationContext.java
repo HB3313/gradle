@@ -16,6 +16,7 @@
 
 package org.gradle.api.internal.provider;
 
+import com.google.common.collect.ImmutableList;
 import org.gradle.api.GradleException;
 
 import java.util.ArrayList;
@@ -23,7 +24,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class EvaluationContext {
     @FunctionalInterface
@@ -37,7 +37,7 @@ public class EvaluationContext {
     private final ThreadLocal<ScopeContext> threadLocalContext = new ThreadLocal<>();
 
     // TODO(mlopatkin) Replace with injection.
-    public static EvaluationContext getInstance() {
+    public static EvaluationContext current() {
         return INSTANCE;
     }
 
@@ -53,7 +53,7 @@ public class EvaluationContext {
      * @param <E> (optional) exception type being thrown by the evaluation
      * @return the result of the evaluation
      * @throws E exception from the {@code evaluation} is propagated
-     * @throws CircularEvaluationException if the provider is already evaluated
+     * @throws CircularEvaluationException if the provider is currently being evaluated in the outer scope
      */
     @SuppressWarnings("try") // We use try-with-resources for side effects
     public <R, E extends Exception> R evaluate(ProviderInternal<?> provider, ScopedEvaluation<? extends R, E> evaluation) throws E {
@@ -65,6 +65,8 @@ public class EvaluationContext {
     /**
      * Runs the {@code evaluation} with the {@code provider} being marked as "evaluating".
      * If the provider is already being evaluated, returns {@code fallbackValue}.
+     * <p>
+     * Note that fallback value is not used if the evaluation itself throws {@link CircularEvaluationException}, the exception propagates instead.
      *
      * @param provider the provider to evaluate
      * @param fallbackValue the fallback value to return if the provider is already evaluating
@@ -81,9 +83,7 @@ public class EvaluationContext {
         }
         // It is possible that the downstream chain itself forms a cycle.
         // However, it should be its responsibility to be defined in terms of safe evaluation rather than us intercepting the failure here.
-        try (ScopeContext ignored = getContext().enter(provider)) {
-            return evaluation.evaluate();
-        }
+        return evaluate(provider, evaluation);
     }
 
     private ScopeContext getContext() {
@@ -195,30 +195,52 @@ public class EvaluationContext {
         private CircularEvaluationException prepareException(ProviderInternal<?> circular) {
             int i = providersStack.indexOf(circular);
             assert i >= 0;
-            return new CircularEvaluationException("Circular evaluation detected: " + formatEvaluationChain(providersStack.subList(i, providersStack.size()), circular));
-        }
-
-        private String safeToString(ProviderInternal<?> providerInternal) {
-            try {
-                return providerInternal.toString();
-            } catch (CircularEvaluationException e) {
-                return "Circular evaluation while computing toString() of " + providerInternal.getClass();
-            }
-        }
-
-        @SuppressWarnings("try") // We use try-with-resources for side effects
-        private String formatEvaluationChain(List<ProviderInternal<?>> evaluationChain, ProviderInternal<?> circular) {
-            try (ScopeContext ignored = nested()) {
-                return Stream.concat(evaluationChain.stream(), Stream.of(circular))
-                    .map(this::safeToString)
-                    .collect(Collectors.joining("\n -> "));
-            }
+            List<ProviderInternal<?>> preCycleList = providersStack.subList(i, providersStack.size());
+            ImmutableList<ProviderInternal<?>> evaluationCycle = ImmutableList.<ProviderInternal<?>>builderWithExpectedSize(preCycleList.size() + 1)
+                .addAll(preCycleList)
+                .add(circular)
+                .build();
+            return new CircularEvaluationException(evaluationCycle);
         }
     }
 
-    private static class CircularEvaluationException extends GradleException {
-        public CircularEvaluationException(String message) {
-            super(message);
+    public static class CircularEvaluationException extends GradleException {
+        private final ImmutableList<ProviderInternal<?>> evaluationCycle;
+
+        CircularEvaluationException(List<ProviderInternal<?>> evaluationCycle) {
+            this.evaluationCycle = ImmutableList.copyOf(evaluationCycle);
+        }
+
+        @Override
+        public String getMessage() {
+            return "Circular evaluation detected: " + formatEvaluationChain(current().getContext(), evaluationCycle);
+        }
+
+        public List<ProviderInternal<?>> getEvaluationCycle() {
+            return evaluationCycle;
+        }
+
+        @SuppressWarnings("try") // We use try-with-resources for side effects
+        private static String formatEvaluationChain(ScopeContext context, List<ProviderInternal<?>> evaluationCycle) {
+            try (ScopeContext ignored = context.nested()) {
+                return evaluationCycle.stream()
+                    .map(CircularEvaluationException::safeToString)
+                    .collect(Collectors.joining("\n -> "));
+            }
+        }
+
+        /**
+         * Computes {@code ProviderInternal.toString()}, but swallows all thrown exceptions.
+         */
+        private static String safeToString(ProviderInternal<?> providerInternal) {
+            try {
+                return providerInternal.toString();
+            } catch (Throwable e) {
+                // Calling e.getMessage() can cause infinite recursion. It happens if e is CircularEvaluationException itself, but
+                // can also happen for some other custom exception that happens to call this method.
+                // User code should not be able to trigger this kind of circularity.
+                return providerInternal.getClass().getName() + " (toString failed with " + e.getClass() + ")";
+            }
         }
     }
 }

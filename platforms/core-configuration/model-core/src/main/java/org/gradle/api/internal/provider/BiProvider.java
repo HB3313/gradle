@@ -70,7 +70,7 @@ public class BiProvider<R, A, B> extends AbstractMinimalProvider<R> {
             return rightValue.asType();
         }
 
-        R combinedUnpackedValue = combiner.apply(leftValue.getWithoutSideEffect(), rightValue.getWithoutSideEffect());
+        R combinedUnpackedValue = evaluate(() -> combiner.apply(leftValue.getWithoutSideEffect(), rightValue.getWithoutSideEffect()));
 
         return Value.ofNullable(combinedUnpackedValue)
             .withSideEffect(SideEffect.fixedFrom(leftValue))

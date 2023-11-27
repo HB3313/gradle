@@ -82,7 +82,7 @@ public class TransformBackedProvider<OUT, IN> extends AbstractMinimalProvider<OU
         if (value.isMissing()) {
             return value.asType();
         }
-        return value.transform(transformer);
+        return evaluate(() -> value.transform(transformer));
     }
 
     protected void beforeRead() {

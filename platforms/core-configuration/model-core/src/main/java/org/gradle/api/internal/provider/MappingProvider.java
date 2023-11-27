@@ -75,6 +75,6 @@ public class MappingProvider<OUT, IN> extends TransformBackedProvider<OUT, IN> {
 
     @Override
     public String toString() {
-        return "map(" + (type == null ? "" : type.getName() + " ") + provider + " " + transformer + ")";
+        return safeToString(() -> "map(" + (type == null ? "" : type.getName() + " ") + provider + " " + transformer + ")");
     }
 }

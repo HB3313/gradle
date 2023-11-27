@@ -52,16 +52,21 @@ public class FlatMapProvider<S, T> extends AbstractMinimalProvider<S> {
 
     private ProviderInternal<? extends S> doMapValue(Value<? extends T> value) {
         T unpackedValue = value.getWithoutSideEffect();
-        Provider<? extends S> transformedProvider = transformer.transform(unpackedValue);
-        if (transformedProvider == null) {
-            return Providers.notDefined();
-        }
+        // Evaluate in a larger scope to avoid messing up with nullability of the transform's result.
+        // IDEA recognizes evaluate as returning non-null and complains about transform() call and the null check.
+        // It cannot infer that evaluate inherits its nullability from the type of the argument.
+        return evaluate(() -> {
+            Provider<? extends S> transformedProvider = transformer.transform(unpackedValue);
+            if (transformedProvider == null) {
+                return Providers.notDefined();
+            }
 
-        // Note, that the potential side effect of the transformed provider
-        // is going to be executed before this fixed side effect.
-        // It is not possible to preserve linear execution order in the general case,
-        // as the transformed provider can have side effects hidden under other wrapping providers.
-        return Providers.internal(transformedProvider).withSideEffect(SideEffect.fixedFrom(value));
+            // Note, that the potential side effect of the transformed provider
+            // is going to be executed before this fixed side effect.
+            // It is not possible to preserve linear execution order in the general case,
+            // as the transformed provider can have side effects hidden under other wrapping providers.
+            return Providers.internal(transformedProvider).withSideEffect(SideEffect.fixedFrom(value));
+        });
     }
 
     private ProviderInternal<? extends S> backingProvider(ValueConsumer consumer) {
