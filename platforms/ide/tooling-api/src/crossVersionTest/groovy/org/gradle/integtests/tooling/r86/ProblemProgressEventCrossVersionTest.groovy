@@ -97,11 +97,9 @@ class ProblemProgressEventCrossVersionTest extends ToolingApiSpecification {
     def "Problems expose details via Tooling API events"() {
         given:
         buildFile << """
-            import org.gradle.api.problems.Problem
-            import org.gradle.api.problems.ProblemsServiceAccessor
+            import org.gradle.api.problems.Problems
             import org.gradle.api.problems.Severity
             import org.gradle.internal.deprecation.Documentation
-
 
             class TestDocLink implements DocLink {
 
@@ -124,11 +122,11 @@ class ProblemProgressEventCrossVersionTest extends ToolingApiSpecification {
 
             abstract class ProblemReportingTask extends DefaultTask {
                 @Inject
-                protected abstract ProblemsServiceAccessor getProblems();
+                protected abstract Problems getProblems();
 
                 @TaskAction
                 void run() {
-                    Problems problems = getProblems().withPluginNamespace("org.example.plugin").get().create {
+                    getProblems().forPluginNamespace("org.example.plugin").create {
                         it.label("shortProblemMessage")
                         $documentationConfig
                         .fileLocation("/tmp/foo", 1, 2, 3)
@@ -178,7 +176,7 @@ class ProblemProgressEventCrossVersionTest extends ToolingApiSpecification {
         where:
         detailsConfig              | expectedDetails | documentationConfig                                          | expecteDocumentation
         '.details("long message")' | "long message"  | '.documentedAt(new TestDocLink("https://docs.example.org"))' | 'https://docs.example.org'
-        ''                         | null            | '.undocumented()'                                            | null
+        ''                         | null            | ''                                                           | null
     }
 
     class ProblemProgressListener implements ProgressListener {

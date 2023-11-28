@@ -30,7 +30,7 @@ import org.gradle.api.problems.ProblemCategory;
 import org.gradle.api.problems.ReportableProblem;
 import org.gradle.api.problems.internal.DefaultProblemCategory;
 import org.gradle.api.problems.internal.DefaultReportableProblem;
-import org.gradle.api.problems.internal.InternalProblems;
+import org.gradle.api.problems.internal.InternalProblemReporter;
 import org.gradle.api.problems.locations.FileLocation;
 import org.gradle.api.problems.locations.PluginIdLocation;
 import org.gradle.api.problems.locations.ProblemLocation;
@@ -52,7 +52,7 @@ import java.util.stream.Stream;
 public class ValidationProblemSerialization {
     private static final GsonBuilder GSON_BUILDER = createGsonBuilder();
 
-    public static List<? extends ReportableProblem> parseMessageList(String lines, InternalProblems problemService) {
+    public static List<? extends ReportableProblem> parseMessageList(String lines, InternalProblemReporter problemService) {
         Gson gson = GSON_BUILDER.create();
         Type type = new TypeToken<List<DefaultReportableProblem>>() {}.getType();
         List<DefaultReportableProblem> reportableProblems = gson.fromJson(lines, type);

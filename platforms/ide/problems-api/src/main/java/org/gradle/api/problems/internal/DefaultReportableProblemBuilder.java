@@ -32,22 +32,23 @@ import javax.annotation.Nullable;
 @Incubating
 public class DefaultReportableProblemBuilder extends DefaultBasicProblemBuilder implements ReportableProblemBuilder {
 
-    private final InternalProblems problemsService;
+    private final InternalProblemReporter problemsService;
 
-    public DefaultReportableProblemBuilder(InternalProblems problemsService, String namespace) {
+    public DefaultReportableProblemBuilder(InternalProblemReporter problemsService, String namespace) {
         super(namespace);
         this.problemsService = problemsService;
 
     }
-    public DefaultReportableProblemBuilder(InternalProblems problemsService, ReportableProblem problem) {
+    public DefaultReportableProblemBuilder(InternalProblemReporter problemsService, ReportableProblem problem) {
         super(problem);
         this.problemsService = problemsService;
     }
 
     public ReportableProblem build() {
-        if (!isExplicitlyUndocumented() && getDocLink() == null) {
-            throw new IllegalStateException("Problem is not documented: " + getLabel());
-        }
+        // TODO (donat) we probably don't need this
+//        if (!isExplicitlyUndocumented() && getDocLink() == null) {
+//            throw new IllegalStateException("Problem is not documented: " + getLabel());
+//        }
 
         return new DefaultReportableProblem(
             getLabel(),

@@ -32,7 +32,7 @@ import java.util.Map;
 @NonNullApi
 public class DefaultReportableProblem extends DefaultProblem implements ReportableProblem {
 
-    private transient InternalProblems problemService;
+    private transient InternalProblemReporter problemService;
 
     public DefaultReportableProblem(
         String message,
@@ -45,7 +45,7 @@ public class DefaultReportableProblem extends DefaultProblem implements Reportab
         ProblemCategory problemCategory,
         Map<String, Object> additionalData,
         @Nullable OperationIdentifier buildOperationId,
-        @Nullable InternalProblems problemService) {
+        @Nullable InternalProblemReporter problemService) {
         super(
             message,
             severity,
@@ -61,7 +61,7 @@ public class DefaultReportableProblem extends DefaultProblem implements Reportab
         this.problemService = problemService;
     }
 
-    public void setProblemService(InternalProblems problemService) {
+    public void setProblemService(InternalProblemReporter problemService) {
         this.problemService = problemService;
     }
 

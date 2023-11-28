@@ -22,7 +22,7 @@ import org.gradle.api.problems.ProblemEmitter
 import org.gradle.api.problems.Problems
 import org.gradle.api.problems.Severity
 import org.gradle.api.problems.internal.DefaultProblems
-import org.gradle.api.problems.internal.InternalProblems
+import org.gradle.api.problems.internal.InternalProblemReporter
 import spock.lang.Specification
 
 class ValidationProblemSerializationTest extends Specification {
@@ -39,7 +39,7 @@ class ValidationProblemSerializationTest extends Specification {
 
         when:
         def json = gson.toJson([problem])
-        def deserialized = ValidationProblemSerialization.parseMessageList(json, (InternalProblems) problems)
+        def deserialized = ValidationProblemSerialization.parseMessageList(json, (InternalProblemReporter) problems)
 
         then:
         deserialized.size() == 1
@@ -59,7 +59,7 @@ class ValidationProblemSerializationTest extends Specification {
 
         when:
         def json = gson.toJson([problem])
-        def deserialized = ValidationProblemSerialization.parseMessageList(json, (InternalProblems) problems)
+        def deserialized = ValidationProblemSerialization.parseMessageList(json, (InternalProblemReporter) problems)
 
         then:
         deserialized.size() == 1
@@ -83,7 +83,7 @@ class ValidationProblemSerializationTest extends Specification {
 
         when:
         def json = gson.toJson([problem])
-        def deserialized = ValidationProblemSerialization.parseMessageList(json, (InternalProblems) problems)
+        def deserialized = ValidationProblemSerialization.parseMessageList(json, (InternalProblemReporter) problems)
 
         then:
         deserialized.size() == 1
@@ -123,7 +123,7 @@ class ValidationProblemSerializationTest extends Specification {
 
         when:
         def json = gson.toJson([problem])
-        def deserialized = ValidationProblemSerialization.parseMessageList(json, (InternalProblems) problems)
+        def deserialized = ValidationProblemSerialization.parseMessageList(json, (InternalProblemReporter) problems)
 
         then:
         deserialized.size() == 1
@@ -144,7 +144,7 @@ class ValidationProblemSerializationTest extends Specification {
 
         when:
         def json = gson.toJson([problem])
-        def deserialized = ValidationProblemSerialization.parseMessageList(json, (InternalProblems) problems)
+        def deserialized = ValidationProblemSerialization.parseMessageList(json, (InternalProblemReporter) problems)
 
         then:
         deserialized.size() == 1
@@ -169,7 +169,7 @@ class ValidationProblemSerializationTest extends Specification {
 
         when:
         def json = gson.toJson([problem])
-        def deserialized = ValidationProblemSerialization.parseMessageList(json, (InternalProblems) problems)
+        def deserialized = ValidationProblemSerialization.parseMessageList(json, (InternalProblemReporter) problems)
 
         then:
         deserialized.size() == 1
@@ -192,7 +192,7 @@ class ValidationProblemSerializationTest extends Specification {
 
         when:
         def json = gson.toJson([problem])
-        def deserialized = ValidationProblemSerialization.parseMessageList(json, (InternalProblems) problems)
+        def deserialized = ValidationProblemSerialization.parseMessageList(json, (InternalProblemReporter) problems)
 
         then:
         deserialized.size() == 1

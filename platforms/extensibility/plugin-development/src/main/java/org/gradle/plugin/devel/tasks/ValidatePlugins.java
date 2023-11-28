@@ -23,7 +23,7 @@ import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.internal.DocumentationRegistry;
 import org.gradle.api.problems.Problems;
 import org.gradle.api.problems.ReportableProblem;
-import org.gradle.api.problems.internal.InternalProblems;
+import org.gradle.api.problems.internal.InternalProblemReporter;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Classpath;
@@ -108,7 +108,7 @@ public abstract class ValidatePlugins extends DefaultTask {
         getWorkerExecutor().await();
 
         Problems problems = getServices().get(Problems.class);
-        List<? extends ReportableProblem> problemMessages = ValidationProblemSerialization.parseMessageList(new String(Files.readAllBytes(getOutputFile().get().getAsFile().toPath())), (InternalProblems) problems);
+        List<? extends ReportableProblem> problemMessages = ValidationProblemSerialization.parseMessageList(new String(Files.readAllBytes(getOutputFile().get().getAsFile().toPath())), (InternalProblemReporter) problems);
 
         Stream<String> messages = ValidationProblemSerialization.toPlainMessage(problemMessages).sorted();
         if (problemMessages.isEmpty()) {

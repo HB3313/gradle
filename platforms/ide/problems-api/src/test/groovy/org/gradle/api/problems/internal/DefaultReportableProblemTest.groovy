@@ -24,7 +24,7 @@ import spock.lang.Specification
 
 class DefaultReportableProblemTest extends Specification {
     def "unbound builder result is equal to original"() {
-        def problem = createReportableTestProblem(severity, additionalData, Mock(InternalProblems))
+        def problem = createReportableTestProblem(severity, additionalData, Mock(InternalProblemReporter))
 
         def newProblem = problem.toBuilder().build()
         expect:
@@ -71,7 +71,7 @@ class DefaultReportableProblemTest extends Specification {
         newProblem.class == DefaultReportableProblem
     }
 
-    private createReportableTestProblem(Severity severity, Map<String, String> additionalData, InternalProblems internalProblems) {
+    private createReportableTestProblem(Severity severity, Map<String, String> additionalData, InternalProblemReporter internalProblems) {
         new DefaultReportableProblem(
             "message",
             severity,

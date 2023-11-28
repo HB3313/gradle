@@ -17,10 +17,8 @@
 package org.gradle.problems.internal.services;
 
 import org.gradle.api.problems.ProblemTransformer;
-import org.gradle.api.problems.ProblemsServiceAccessor;
+import org.gradle.api.problems.Problems;
 import org.gradle.api.problems.internal.DefaultProblems;
-import org.gradle.api.problems.internal.DefaultProblemsServiceAccessor;
-import org.gradle.api.problems.internal.InternalProblems;
 import org.gradle.internal.operations.BuildOperationAncestryTracker;
 import org.gradle.internal.operations.BuildOperationProgressEventEmitter;
 import org.gradle.problems.buildtree.ProblemDiagnosticsFactory;
@@ -33,16 +31,12 @@ import java.util.List;
 
 public class ProblemsBuildTreeServices {
 
-    InternalProblems createProblemsService(
+    Problems createProblemsService(
         BuildOperationProgressEventEmitter buildOperationProgressEventEmitter,
         List<ProblemTransformer> transformers
     ) {
         BuildOperationBasedProblemEmitter emitter = new BuildOperationBasedProblemEmitter(buildOperationProgressEventEmitter);
         return new DefaultProblems(emitter, transformers);
-    }
-
-    ProblemsServiceAccessor createProblemsServiceAccessor(InternalProblems problems) {
-        return new DefaultProblemsServiceAccessor(problems);
     }
 
     ProblemTransformer createPluginIdLocationTransformer(BuildOperationAncestryTracker buildOperationAncestryTracker, OperationListener operationListener) {

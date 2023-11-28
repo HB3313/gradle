@@ -17,6 +17,8 @@
 package org.gradle.api.problems;
 
 import org.gradle.api.Incubating;
+import org.gradle.internal.service.scopes.Scopes;
+import org.gradle.internal.service.scopes.ServiceScope;
 
 /**
  * Problems API service.
@@ -28,40 +30,48 @@ import org.gradle.api.Incubating;
  * @since 8.4
  */
 @Incubating
+@ServiceScope(Scopes.BuildTree.class)
 public interface Problems {
+
+    /**
+     * Method to be exposed only on an internal sub-interface of this interface.
+     * @return this.
+     * @since 8.6
+     */
+    ProblemReporter forDefaultNamespace();
 
     /**
      * Method to be exposed only on this interface.
      * @return this.
      * @since 8.6
      */
-    Problems forDefaultNamespace();
+    ProblemReporter forPluginNamespace(String namespace);
 
-    /**
-     * Configures a new problem with error severity, reports it and uses it to throw a new exception.
-     * <p>
-     *
-     * @return nothing, the method throws an exception
-     */
-    RuntimeException throwing(ProblemBuilderSpec action);
-
-    /**
-     * Configures a new problem with error severity using an existing exception as input, reports it and uses it to throw a new exception.
-     * <p>
-     *
-     * @return nothing, the method throws an exception
-     */
-    RuntimeException rethrowing(RuntimeException e, ProblemBuilderSpec action);
-
-    /**
-     * Configures a new problem.
-     * <p>
-     * If all required fields are provided, the method creates and returns a new problem.
-     * Problems should be reported separately with {@link ReportableProblem#report()}.
-     *
-     * @return a new problem
-     * <p>
-     * @since 8.5
-     */
-    ReportableProblem create(ProblemBuilderSpec action);
+//    /**
+//     * Configures a new problem with error severity, reports it and uses it to throw a new exception.
+//     * <p>
+//     *
+//     * @return nothing, the method throws an exception
+//     */
+//    RuntimeException throwing(ProblemBuilderSpec action);
+//
+//    /**
+//     * Configures a new problem with error severity using an existing exception as input, reports it and uses it to throw a new exception.
+//     * <p>
+//     *
+//     * @return nothing, the method throws an exception
+//     */
+//    RuntimeException rethrowing(RuntimeException e, ProblemBuilderSpec action);
+//
+//    /**
+//     * Configures a new problem.
+//     * <p>
+//     * If all required fields are provided, the method creates and returns a new problem.
+//     * Problems should be reported separately with {@link ReportableProblem#report()}.
+//     *
+//     * @return a new problem
+//     * <p>
+//     * @since 8.5
+//     */
+//    ReportableProblem create(ProblemBuilderSpec action);
 }
