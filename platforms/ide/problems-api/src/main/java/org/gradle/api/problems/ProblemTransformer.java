@@ -26,7 +26,7 @@ import org.gradle.api.Incubating;
  * @since 8.5
  */
 @Incubating
-public interface ProblemTransformer {
+public interface ProblemTransformer { // TODO this should not be part of the public API
 
     /**
      * Transforms the given problem. The returned problem will be reported instead of the original problem.
