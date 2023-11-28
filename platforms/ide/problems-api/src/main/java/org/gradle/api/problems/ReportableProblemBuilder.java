@@ -30,7 +30,6 @@ import javax.annotation.Nullable;
  *  <problemService>.createProblemBuilder()
  *          .label("test problem")
  *          .undocumented()
- *          .noLocation()
  *          .cotegory("problemCategory")
  *          .severity(Severity.ERROR)
  *          .details("this is a test")
@@ -83,12 +82,6 @@ public interface ReportableProblemBuilder extends BasicProblemBuilder {
      */
     @Override
     ReportableProblemBuilder stackLocation();
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    ReportableProblemBuilder noLocation();
 
     /**
      * {@inheritDoc}

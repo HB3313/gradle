@@ -91,7 +91,6 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
                     problems.create {
                         it.label("label")
                         .documentedAt(Documentation.userManual("test-id", "test-section"))
-                        .noLocation()
                         .category("type")
                         }.report()
                 }
@@ -127,7 +126,6 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
                     problems.create {
                         it.label("label")
                         .documentedAt(Documentation.upgradeGuide(8, "test-section"))
-                        .noLocation()
                         .category("type")
                         }.report()
                 }
@@ -164,7 +162,6 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
                         .documentedAt(
                             Documentation.dslReference(Problem.class, "label")
                         )
-                        .noLocation()
                         .category("type")
                         }.report()
                 }
@@ -309,7 +306,6 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
                 void run() {
                     problems.create {
                         it.label("label")
-                        .noLocation()
                         .category("type")
                         .solution("solution")
                         .severity(Severity.${severity.name()})
@@ -344,7 +340,6 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
                 void run() {
                     problems.create {
                         it.label("label")
-                        .noLocation()
                         .category("type")
                         .solution("solution")
                         }.report()
@@ -377,7 +372,6 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
                 void run() {
                     problems.create {
                         it.label("label")
-                        .noLocation()
                         .category("type")
                         .withException(new RuntimeException("test"))
                         }.report()
@@ -409,7 +403,6 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
                 void run() {
                     problems.create {
                         it.label("label")
-                        .noLocation()
                         .category("type")
                         .additionalData("key", "value")
                         }.report()
@@ -444,7 +437,6 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
                 void run() {
                     problems.create {
                         it.label("label")
-                        .noLocation()
                         .category("type")
                         .additionalData("key", ["collections", "are", "not", "supported", "yet"])
                     }.report()
@@ -471,7 +463,6 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
                     problems.throwing {
                         spec -> spec
                             .label("label")
-                            .noLocation()
                             .category("type")
                             .withException(new RuntimeException("test"))
                     }
@@ -500,7 +491,6 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
                     def exception = new RuntimeException("test")
                     problems.rethrowing(exception) { it
                         .label("label")
-                        .noLocation()
                         .category("type")
                     }
                 }
@@ -528,14 +518,12 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
                         def exception = new RuntimeException("test")
                         problems.throwing { spec -> spec
                             .label("inner")
-                            .noLocation()
                             .category("type")
                             .withException(exception)
                         }
                     } catch (RuntimeException ex) {
                         problems.rethrowing(ex) { spec -> spec
                             .label("outer")
-                            .noLocation()
                             .category("type")
                         }
                     }

@@ -29,7 +29,6 @@ import javax.annotation.Nullable;
  * <pre>{@code
  *  <problemService>.report(configurator -> configurator
  *          .label("test problem")
- *          .noLocation()
  *          .category("problemCategory")
  *          .severity(Severity.ERROR)
  *          .details("this is a test")
@@ -105,14 +104,6 @@ public interface ProblemBuilder {
      * @since 8.6
      */
     ProblemBuilder stackLocation();
-
-    /**
-     * Declares that this problem has no associated location data.
-     *
-     * @return the builder for the next required property
-     * @since 8.6
-     */
-    ProblemBuilder noLocation();
 
     /**
      * The long description of this problem.

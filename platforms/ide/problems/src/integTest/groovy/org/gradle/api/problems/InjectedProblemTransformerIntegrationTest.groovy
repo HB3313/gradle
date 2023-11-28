@@ -44,7 +44,6 @@ class InjectedProblemTransformerIntegrationTest extends AbstractIntegrationSpec 
                 void run() {
                     problems.create {
                         it.label("label")
-                        .noLocation()
                         .category("type")
                     }.report()
                 }
@@ -90,7 +89,6 @@ class InjectedProblemTransformerIntegrationTest extends AbstractIntegrationSpec 
                     getProblems().create(builder ->
                         builder
                             .label("label")
-                            .noLocation()
                             .category("type")
                     ).report();
                     project.getTasks().register("reportProblem", t -> {

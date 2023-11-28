@@ -166,7 +166,6 @@ public abstract class ValidateAction implements WorkAction<ValidateAction.Params
                         .withAnnotationType(topLevelBean)
                         .label("must be annotated either with " + cacheableAnnotation + " or with " + disableCachingAnnotation)
                         .documentedAt(userManual("validation_problems", "disable_caching_by_default"))
-                        .noLocation()
                         .category("validation", "type", TextUtil.screamingSnakeToKebabCase(ValidationTypes.NOT_CACHEABLE_WITHOUT_REASON))
                         .severity(WARNING)
                         .details("The " + workType + " author should make clear why a " + workType + " is not cacheable")

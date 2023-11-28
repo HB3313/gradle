@@ -174,7 +174,6 @@ public class MissingTaskDependencyDetector {
             problem.typeIsIrrelevantInErrorMessage()
                 .label("Gradle detected a problem with the following location: '" + consumerProducerPath + "'")
                 .documentedAt(userManual("validation_problems", IMPLICIT_DEPENDENCY.toLowerCase()))
-                .noLocation()
                 .category(VALIDATION, "property", TextUtil.screamingSnakeToKebabCase(IMPLICIT_DEPENDENCY))
                 .severity(Severity.ERROR)
                 .details(String.format("Task '%s' uses this output of task '%s' without declaring an explicit or implicit dependency. "

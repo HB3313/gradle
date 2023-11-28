@@ -66,11 +66,6 @@ class DelegatingReportableProblemBuilder implements ReportableProblemBuilder {
     }
 
     @Override
-    public ReportableProblemBuilder noLocation() {
-        return validateDelegate(delegate.noLocation());
-    }
-
-    @Override
     public ReportableProblemBuilder category(String category, String... details){
         return validateDelegate(delegate.category(category, details));
     }

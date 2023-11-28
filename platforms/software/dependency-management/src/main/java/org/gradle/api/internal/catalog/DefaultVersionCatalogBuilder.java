@@ -215,7 +215,6 @@ public abstract class DefaultVersionCatalogBuilder implements VersionCatalogBuil
     private static ProblemBuilder configureVersionCatalogError(ProblemBuilder builder, String message, VersionCatalogProblemId catalogProblemId) {
         return builder.label(message)
             .documentedAt(userManual(VERSION_CATALOG_PROBLEMS, catalogProblemId.name().toLowerCase()))
-            .noLocation()
             .category("dependency-version-catalog", TextUtil.screamingSnakeToKebabCase(catalogProblemId.name()))
             .severity(ERROR);
     }

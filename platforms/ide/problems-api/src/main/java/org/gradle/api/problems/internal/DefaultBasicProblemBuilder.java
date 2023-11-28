@@ -165,11 +165,6 @@ public class DefaultBasicProblemBuilder implements BasicProblemBuilder {
         return this;
     }
 
-    @Override
-    public BasicProblemBuilder noLocation() {
-        return this;
-    }
-
     public BasicProblemBuilder details(String details) {
         this.details = details;
         return this;

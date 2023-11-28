@@ -26,7 +26,6 @@ import org.gradle.api.Incubating;
  * <pre>
  * throw getProblemService().throwing(builder -&gt;
  *        builder.label(message)
- *            .noLocation()
  *            .type("task_selection")
  *            .details("long message")
  *            .severity(Severity.ERROR)

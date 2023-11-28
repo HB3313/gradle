@@ -68,7 +68,6 @@ public class ServiceReferencePropertyAnnotationHandler extends AbstractPropertyA
                     .forProperty(propertyMetadata.getPropertyName())
                     .label("has @ServiceReference annotation used on property of type '%s' which is not a build service implementation", typeVariables.get(0).getName())
                     .documentedAt(userManual("validation_problems", SERVICE_REFERENCE_MUST_BE_A_BUILD_SERVICE.toLowerCase()))
-                    .noLocation()
                     .category(VALIDATION, "property", TextUtil.screamingSnakeToKebabCase(SERVICE_REFERENCE_MUST_BE_A_BUILD_SERVICE))
                     .severity(Severity.ERROR)
                     .details(String.format("A property annotated with @ServiceReference must be of a type that implements '%s'", BuildService.class.getName()))

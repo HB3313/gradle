@@ -101,11 +101,6 @@ public class DefaultReportableProblemBuilder extends DefaultBasicProblemBuilder 
         return this;
     }
 
-    @Override
-    public ReportableProblemBuilder noLocation() {
-        return this;
-    }
-
     public ReportableProblemBuilder details(String details) {
         super.details(details);
         return this;
