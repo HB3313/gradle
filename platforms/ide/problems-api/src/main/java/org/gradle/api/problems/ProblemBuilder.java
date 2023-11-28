@@ -29,7 +29,6 @@ import javax.annotation.Nullable;
  * <pre>{@code
  *  <problemService>.report(configurator -> configurator
  *          .label("test problem")
- *          .undocumented()
  *          .noLocation()
  *          .category("problemCategory")
  *          .severity(Severity.ERROR)
@@ -77,14 +76,6 @@ public interface ProblemBuilder {
      * @since 8.6
      */
     ProblemBuilder documentedAt(DocLink doc);
-
-    /**
-     * Marks this problem as undocumented
-     *
-     * @return the builder for the next required property
-     * @since 8.6
-     */
-    ProblemBuilder undocumented();
 
     /**
      * Declares that this problem is in a file with optional position and length.

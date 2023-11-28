@@ -70,12 +70,6 @@ public interface BasicProblemBuilder extends ProblemBuilder {
      * {@inheritDoc}
      */
     @Override
-    BasicProblemBuilder undocumented();
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     BasicProblemBuilder fileLocation(String path, @Nullable Integer line, @Nullable Integer column, @Nullable Integer length);
 
     /**

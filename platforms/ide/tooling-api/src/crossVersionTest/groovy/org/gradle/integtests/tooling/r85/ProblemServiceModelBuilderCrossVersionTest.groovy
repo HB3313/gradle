@@ -60,7 +60,6 @@ class ProblemServiceModelBuilderCrossVersionTest extends ToolingApiSpecification
                 Object buildAll(String modelName, Project project) {
                     problemService.create {
                         it.label("label")
-                            .undocumented()
                             .noLocation()
                             .category("testcategory")
                             .withException(new RuntimeException("test"))

@@ -182,13 +182,6 @@ public class DefaultBasicProblemBuilder implements BasicProblemBuilder {
     }
 
     @Override
-    public BasicProblemBuilder undocumented() {
-        this.explicitlyUndocumented = true;
-        this.docLink = null;
-        return this;
-    }
-
-    @Override
     public BasicProblemBuilder category(String category, String... details){
         this.problemCategory = DefaultProblemCategory.category(category, details).toString();
         return this;

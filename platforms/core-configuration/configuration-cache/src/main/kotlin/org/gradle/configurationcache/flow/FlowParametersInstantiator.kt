@@ -78,7 +78,6 @@ class FlowParametersInstantiator(
                                     problemsService.create { builder ->
                                         builder
                                             .label("Property '$propertyName' cannot carry a dependency on $dependency as these are not yet supported.")
-                                            .undocumented()
                                             .noLocation()
                                             .category("validation", "property", "invalid-dependency")
                                             .severity(Severity.ERROR)

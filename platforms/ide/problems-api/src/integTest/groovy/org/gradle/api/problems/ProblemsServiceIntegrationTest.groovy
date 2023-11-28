@@ -43,7 +43,6 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
                 void run() {
                     problems.create {
                         it.label("label")
-                        .undocumented()
                         .stackLocation()
                         .category("type")
                         }.report()
@@ -197,7 +196,6 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
                 void run() {
                     problems.create {
                         it.label("label")
-                        .undocumented()
                         .fileLocation("test-location", null, null, null)
                         .category("type")
                         }.report()
@@ -234,7 +232,6 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
                 void run() {
                     problems.create {
                         it.label("label")
-                        .undocumented()
                         .fileLocation("test-location", 1, 2, 3)
                         .category("type")
                         }.report()
@@ -278,7 +275,6 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
                 void run() {
                     problems.create {
                         it.label("label")
-                        .undocumented()
                         .pluginLocation("org.example.pluginid")
                         .category("type")
                         }.report()
@@ -313,7 +309,6 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
                 void run() {
                     problems.create {
                         it.label("label")
-                        .undocumented()
                         .noLocation()
                         .category("type")
                         .solution("solution")
@@ -349,7 +344,6 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
                 void run() {
                     problems.create {
                         it.label("label")
-                        .undocumented()
                         .noLocation()
                         .category("type")
                         .solution("solution")
@@ -383,7 +377,6 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
                 void run() {
                     problems.create {
                         it.label("label")
-                        .undocumented()
                         .noLocation()
                         .category("type")
                         .withException(new RuntimeException("test"))
@@ -416,7 +409,6 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
                 void run() {
                     problems.create {
                         it.label("label")
-                        .undocumented()
                         .noLocation()
                         .category("type")
                         .additionalData("key", "value")
@@ -452,7 +444,6 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
                 void run() {
                     problems.create {
                         it.label("label")
-                        .undocumented()
                         .noLocation()
                         .category("type")
                         .additionalData("key", ["collections", "are", "not", "supported", "yet"])
@@ -480,7 +471,6 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
                     problems.throwing {
                         spec -> spec
                             .label("label")
-                            .undocumented()
                             .noLocation()
                             .category("type")
                             .withException(new RuntimeException("test"))
@@ -510,7 +500,6 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
                     def exception = new RuntimeException("test")
                     problems.rethrowing(exception) { it
                         .label("label")
-                        .undocumented()
                         .noLocation()
                         .category("type")
                     }
@@ -539,7 +528,6 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
                         def exception = new RuntimeException("test")
                         problems.throwing { spec -> spec
                             .label("inner")
-                            .undocumented()
                             .noLocation()
                             .category("type")
                             .withException(exception)
@@ -547,7 +535,6 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
                     } catch (RuntimeException ex) {
                         problems.rethrowing(ex) { spec -> spec
                             .label("outer")
-                            .undocumented()
                             .noLocation()
                             .category("type")
                         }

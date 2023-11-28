@@ -70,12 +70,6 @@ public interface ReportableProblemBuilder extends BasicProblemBuilder {
      * {@inheritDoc}
      */
     @Override
-    ReportableProblemBuilder undocumented();
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     ReportableProblemBuilder fileLocation(String path, @Nullable Integer line, @Nullable Integer column, @Nullable Integer length);
 
     /**

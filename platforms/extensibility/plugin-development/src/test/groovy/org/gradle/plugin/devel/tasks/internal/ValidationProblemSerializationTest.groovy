@@ -34,7 +34,6 @@ class ValidationProblemSerializationTest extends Specification {
         given:
         def problem = problems.create {
             it.label("label")
-                .undocumented()
                 .noLocation()
                 .category("type")
         }
@@ -55,7 +54,6 @@ class ValidationProblemSerializationTest extends Specification {
         given:
         def problem = problems.create {
             it.label("label")
-                .undocumented()
                 .fileLocation("location", 1, 2, 3)
                 .category("type")
         }
@@ -120,7 +118,6 @@ class ValidationProblemSerializationTest extends Specification {
         given:
         def problem = problems.create {
             it.label("label")
-                .undocumented()
                 .noLocation()
                 .category("type")
                 .withException(new RuntimeException("cause"))
@@ -143,7 +140,6 @@ class ValidationProblemSerializationTest extends Specification {
         given:
         def problem = problems.create {
             it.label("label")
-                .undocumented()
                 .noLocation()
                 .category("type")
                 .severity(severity)
@@ -169,7 +165,6 @@ class ValidationProblemSerializationTest extends Specification {
         given:
         def problem = problems.create {
             it.label("label")
-                .undocumented()
                 .noLocation()
                 .category("type")
                 .solution("solution 0")
@@ -194,7 +189,6 @@ class ValidationProblemSerializationTest extends Specification {
         given:
         def problem = problems.create {
             it.label("label")
-                .undocumented()
                 .noLocation()
                 .category("type")
                 .additionalData("key 1", "value 1")

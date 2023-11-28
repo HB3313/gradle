@@ -44,11 +44,6 @@ class DelegatingReportableProblemBuilder implements ReportableProblemBuilder {
     }
 
     @Override
-    public ReportableProblemBuilder undocumented() {
-        return validateDelegate(delegate.undocumented());
-    }
-
-    @Override
     public ReportableProblemBuilder fileLocation(String path, @Nullable Integer line, @Nullable Integer column, @Nullable Integer length) {
         return validateDelegate(delegate.fileLocation(path, line, column, length));
     }

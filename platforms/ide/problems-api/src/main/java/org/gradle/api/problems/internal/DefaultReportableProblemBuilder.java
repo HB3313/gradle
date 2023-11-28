@@ -117,12 +117,6 @@ public class DefaultReportableProblemBuilder extends DefaultBasicProblemBuilder 
     }
 
     @Override
-    public ReportableProblemBuilder undocumented() {
-        super.undocumented();
-        return this;
-    }
-
-    @Override
     public ReportableProblemBuilder category(String category, String... details){
         super.category(category, details);
         return this;
