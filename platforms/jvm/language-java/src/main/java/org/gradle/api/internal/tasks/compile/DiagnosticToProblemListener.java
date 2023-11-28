@@ -49,9 +49,8 @@ public class DiagnosticToProblemListener implements DiagnosticListener<JavaFileO
 
         problems.create(problem -> problem
             .label(label)
-            .undocumented()
             .fileLocation(resourceName, line, column, length)
-            .category("compiler", "java") 
+            .category("compiler", "java")
             .severity(severity)
             .details(message)
         ).report();

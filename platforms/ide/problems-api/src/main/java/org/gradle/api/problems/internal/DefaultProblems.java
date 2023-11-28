@@ -33,7 +33,6 @@ public class DefaultProblems implements InternalProblems {
 
     private ProblemEmitter emitter;
     private final List<ProblemTransformer> transformers;
-    private String namespace = "gradle";
 
     public DefaultProblems(ProblemEmitter emitter) {
         this(emitter, Collections.<ProblemTransformer>emptyList());
