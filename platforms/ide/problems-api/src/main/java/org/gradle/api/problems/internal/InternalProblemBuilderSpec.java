@@ -14,19 +14,10 @@
  * limitations under the License.
  */
 
-package org.gradle.api.problems;
+package org.gradle.api.problems.internal;
 
-import org.gradle.api.Incubating;
 
-/**
- * Extensible configuration for the accessing Problems services.
- *
- * @since 8.6
- */
-@Incubating
-public interface ProblemServiceLookupWithConfiguration {
+public interface InternalProblemBuilderSpec {
 
-    // setDefaultSeverity()
-
-    ProblemReporter createReporter();
+    InternalProblemBuilder apply(InternalProblemBuilder builder);
 }

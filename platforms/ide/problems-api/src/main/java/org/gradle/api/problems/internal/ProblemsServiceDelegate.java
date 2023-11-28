@@ -38,6 +38,14 @@ public class ProblemsServiceDelegate implements InternalProblemReporter {
     }
 
     @Override
+    public RuntimeException throwingInternal(InternalProblemBuilderSpec action) {
+        DefaultReportableProblemBuilder defaultProblemBuilder = createProblemBuilder();
+        action.apply(defaultProblemBuilder);
+        ReportableProblem problem = defaultProblemBuilder.build();
+        throw throwError(problem.getException(), problem);
+    }
+
+    @Override
     public RuntimeException throwing(ProblemBuilderSpec action) {
         DefaultReportableProblemBuilder defaultProblemBuilder = createProblemBuilder();
         action.apply(defaultProblemBuilder);
@@ -59,7 +67,22 @@ public class ProblemsServiceDelegate implements InternalProblemReporter {
     }
 
     @Override
+    public RuntimeException rethrowingInternal(RuntimeException e, InternalProblemBuilderSpec action) {
+        DefaultReportableProblemBuilder defaultProblemBuilder = createProblemBuilder();
+        ProblemBuilder problemBuilder = action.apply(defaultProblemBuilder);
+        problemBuilder.withException(e);
+        throw throwError(e, defaultProblemBuilder.build());
+    }
+
+    @Override
     public ReportableProblem create(ProblemBuilderSpec action) {
+        DefaultReportableProblemBuilder defaultProblemBuilder = createProblemBuilder();
+        action.apply(defaultProblemBuilder);
+        return defaultProblemBuilder.build();
+    }
+
+    @Override
+    public ReportableProblem createInternal(InternalProblemBuilderSpec action) {
         DefaultReportableProblemBuilder defaultProblemBuilder = createProblemBuilder();
         action.apply(defaultProblemBuilder);
         return defaultProblemBuilder.build();

@@ -16,10 +16,9 @@
 
 package org.gradle.api.problems.internal;
 
-import org.gradle.api.problems.ProblemReporter;
 import org.gradle.api.problems.Problems;
 
 public interface InternalProblems extends Problems {
 
-    ProblemReporter forCoreNamespace();
+    InternalProblemReporter forCoreNamespace();
 }

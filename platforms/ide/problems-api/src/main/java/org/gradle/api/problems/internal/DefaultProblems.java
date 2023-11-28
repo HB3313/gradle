@@ -50,7 +50,7 @@ public class DefaultProblems implements InternalProblems {
     }
 
     @Override
-    public ProblemReporter forCoreNamespace() {
+    public InternalProblemReporter forCoreNamespace() {
         return new ProblemsServiceDelegate(emitter, transformers, DefaultProblemCategory.getCoreNamespace());
     }
 }

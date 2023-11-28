@@ -19,7 +19,6 @@ package org.gradle.api.problems.internal;
 import org.gradle.api.Incubating;
 import org.gradle.api.problems.DocLink;
 import org.gradle.api.problems.ReportableProblem;
-import org.gradle.api.problems.ReportableProblemBuilder;
 import org.gradle.api.problems.Severity;
 
 import javax.annotation.Nullable;
@@ -30,7 +29,7 @@ import javax.annotation.Nullable;
  * @since 8.3
  */
 @Incubating
-public class DefaultReportableProblemBuilder extends DefaultBasicProblemBuilder implements ReportableProblemBuilder {
+public class DefaultReportableProblemBuilder extends DefaultBasicProblemBuilder implements InternalProblemBuilder {
 
     private final InternalProblemReporter problemsService;
 
@@ -64,73 +63,76 @@ public class DefaultReportableProblemBuilder extends DefaultBasicProblemBuilder 
             problemsService);
     }
 
-
-    public ReportableProblemBuilder label(String label, Object... args) {
+    @Override
+    public InternalProblemBuilder label(String label, Object... args) {
         super.label(label, args);
         return this;
     }
 
     @Override
-    public ReportableProblemBuilder severity(Severity severity) {
+    public InternalProblemBuilder severity(Severity severity) {
         super.severity(severity);
         return this;
     }
 
-    public ReportableProblemBuilder location(String path, @javax.annotation.Nullable Integer line) {
+    @Override
+    public InternalProblemBuilder location(String path, @javax.annotation.Nullable Integer line) {
         location(path, line, null);
         return this;
     }
 
-    public ReportableProblemBuilder location(String path, @javax.annotation.Nullable Integer line, @javax.annotation.Nullable Integer column) {
+    @Override
+    public InternalProblemBuilder location(String path, @javax.annotation.Nullable Integer line, @javax.annotation.Nullable Integer column) {
         super.location(path, line, column);
         return this;
     }
 
-    public ReportableProblemBuilder fileLocation(String path, @javax.annotation.Nullable Integer line, @javax.annotation.Nullable Integer column, @javax.annotation.Nullable Integer length) {
+    @Override
+    public InternalProblemBuilder fileLocation(String path, @javax.annotation.Nullable Integer line, @javax.annotation.Nullable Integer column, @javax.annotation.Nullable Integer length) {
         super.fileLocation(path, line, column, length);
         return this;
     }
 
     @Override
-    public ReportableProblemBuilder pluginLocation(String pluginId) {
+    public InternalProblemBuilder pluginLocation(String pluginId) {
         super.pluginLocation(pluginId);
         return this;
     }
 
     @Override
-    public ReportableProblemBuilder stackLocation() {
+    public InternalProblemBuilder stackLocation() {
         super.stackLocation();
         return this;
     }
 
-    public ReportableProblemBuilder details(String details) {
+    public InternalProblemBuilder details(String details) {
         super.details(details);
         return this;
     }
 
-    public ReportableProblemBuilder documentedAt(DocLink doc) {
+    public InternalProblemBuilder documentedAt(DocLink doc) {
         super.documentedAt(doc);
         return this;
     }
 
     @Override
-    public ReportableProblemBuilder category(String category, String... details){
+    public InternalProblemBuilder category(String category, String... details){
         super.category(category, details);
         return this;
     }
 
-    public ReportableProblemBuilder solution(@Nullable String solution) {
+    public InternalProblemBuilder solution(@Nullable String solution) {
         super.solution(solution);
         return this;
     }
 
-    public ReportableProblemBuilder additionalData(String key, Object value) {
+    public InternalProblemBuilder additionalData(String key, Object value) {
         super.additionalData(key, value);
         return this;
     }
 
     @Override
-    public ReportableProblemBuilder withException(RuntimeException e) {
+    public InternalProblemBuilder withException(RuntimeException e) {
         super.withException(e);
         return this;
     }

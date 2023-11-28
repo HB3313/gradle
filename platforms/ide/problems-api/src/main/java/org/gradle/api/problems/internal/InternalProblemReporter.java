@@ -27,6 +27,16 @@ import org.gradle.internal.service.scopes.ServiceScope;
 @ServiceScope(Scopes.BuildTree.class)
 public interface InternalProblemReporter extends ProblemReporter {
 
+    RuntimeException throwingInternal(InternalProblemBuilderSpec action);
+
+
+    RuntimeException rethrowingInternal(RuntimeException e, InternalProblemBuilderSpec action);
+
+
+    ReportableProblem createInternal(InternalProblemBuilderSpec action);
+
+    // TODO (donat) maybe move the methods below to the implementation class, or at least to a sub-interface
+
     /**
      * Returns a new problem builder which can configure and create Problem instances.
      * <p>
