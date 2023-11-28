@@ -41,7 +41,7 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
 
                 @TaskAction
                 void run() {
-                    problems.create {
+                    problems.forDefaultNamespace().create {
                         it.label("label")
                         .stackLocation()
                         .category("type")
@@ -88,7 +88,7 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
 
                 @TaskAction
                 void run() {
-                    problems.create {
+                    problems.forDefaultNamespace().create {
                         it.label("label")
                         .documentedAt(Documentation.userManual("test-id", "test-section"))
                         .category("type")
@@ -123,7 +123,7 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
 
                 @TaskAction
                 void run() {
-                    problems.create {
+                    problems.forDefaultNamespace().create {
                         it.label("label")
                         .documentedAt(Documentation.upgradeGuide(8, "test-section"))
                         .category("type")
@@ -157,7 +157,7 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
 
                 @TaskAction
                 void run() {
-                    problems.create {
+                    problems.forDefaultNamespace().create {
                         it.label("label")
                         .documentedAt(
                             Documentation.dslReference(Problem.class, "label")
@@ -191,7 +191,7 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
 
                 @TaskAction
                 void run() {
-                    problems.create {
+                    problems.forDefaultNamespace().create {
                         it.label("label")
                         .fileLocation("test-location", null, null, null)
                         .category("type")
@@ -227,7 +227,7 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
 
                 @TaskAction
                 void run() {
-                    problems.create {
+                    problems.forDefaultNamespace().create {
                         it.label("label")
                         .fileLocation("test-location", 1, 2, 3)
                         .category("type")
@@ -270,7 +270,7 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
 
                 @TaskAction
                 void run() {
-                    problems.create {
+                    problems.forDefaultNamespace().create {
                         it.label("label")
                         .pluginLocation("org.example.pluginid")
                         .category("type")
@@ -338,7 +338,7 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
 
                 @TaskAction
                 void run() {
-                    problems.create {
+                    problems.forDefaultNamespace().create {
                         it.label("label")
                         .category("type")
                         .solution("solution")
@@ -370,7 +370,7 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
 
                 @TaskAction
                 void run() {
-                    problems.create {
+                    problems.forDefaultNamespace().create {
                         it.label("label")
                         .category("type")
                         .withException(new RuntimeException("test"))
@@ -401,7 +401,7 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
 
                 @TaskAction
                 void run() {
-                    problems.create {
+                    problems.forDefaultNamespace().create {
                         it.label("label")
                         .category("type")
                         .additionalData("key", "value")
@@ -435,7 +435,7 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
 
                 @TaskAction
                 void run() {
-                    problems.create {
+                    problems.forDefaultNamespace().create {
                         it.label("label")
                         .category("type")
                         .additionalData("key", ["collections", "are", "not", "supported", "yet"])
@@ -460,7 +460,7 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
 
                 @TaskAction
                 void run() {
-                    problems.throwing {
+                    problems.forDefaultNamespace().throwing {
                         spec -> spec
                             .label("label")
                             .category("type")
@@ -489,7 +489,7 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
                 @TaskAction
                 void run() {
                     def exception = new RuntimeException("test")
-                    problems.rethrowing(exception) { it
+                    problems.forDefaultNamespace().rethrowing(exception) { it
                         .label("label")
                         .category("type")
                     }
@@ -516,13 +516,13 @@ class ProblemsServiceIntegrationTest extends AbstractIntegrationSpec {
                 void run() {
                     try {
                         def exception = new RuntimeException("test")
-                        problems.throwing { spec -> spec
+                        problems.forDefaultNamespace().throwing { spec -> spec
                             .label("inner")
                             .category("type")
                             .withException(exception)
                         }
                     } catch (RuntimeException ex) {
-                        problems.rethrowing(ex) { spec -> spec
+                        problems.forDefaultNamespace().rethrowing(ex) { spec -> spec
                             .label("outer")
                             .category("type")
                         }

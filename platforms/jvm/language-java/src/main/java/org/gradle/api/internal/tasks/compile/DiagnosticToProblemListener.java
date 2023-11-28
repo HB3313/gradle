@@ -47,7 +47,7 @@ public class DiagnosticToProblemListener implements DiagnosticListener<JavaFileO
         Integer length = Math.toIntExact(diagnostic.getEndPosition() - diagnostic.getStartPosition());
         Severity severity = mapKindToSeverity(diagnostic.getKind());
 
-        problems.create(problem -> problem
+        problems.forDefaultNamespace().create(problem -> problem
             .label(label)
             .fileLocation(resourceName, line, column, length)
             .category("compiler", "java")

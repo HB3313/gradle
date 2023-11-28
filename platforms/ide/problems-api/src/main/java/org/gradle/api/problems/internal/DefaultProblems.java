@@ -21,6 +21,7 @@ import org.gradle.api.problems.ProblemBuilder;
 import org.gradle.api.problems.ProblemBuilderSpec;
 import org.gradle.api.problems.ProblemEmitter;
 import org.gradle.api.problems.ProblemTransformer;
+import org.gradle.api.problems.Problems;
 import org.gradle.api.problems.ReportableProblem;
 import org.gradle.internal.service.scopes.Scopes;
 import org.gradle.internal.service.scopes.ServiceScope;
@@ -46,6 +47,11 @@ public class DefaultProblems implements InternalProblems {
 
     public void setEmitter(ProblemEmitter emitter) {
         this.emitter = emitter;
+    }
+
+    @Override
+    public Problems forDefaultNamespace() {
+        return this;
     }
 
     @Override

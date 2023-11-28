@@ -54,7 +54,7 @@ class WorkerExecutorProblemsApiIntegrationTest extends AbstractIntegrationSpec {
 
                 @Override
                 public void execute() {
-                    getProblems().create(problem -> problem
+                    getProblems().forDefaultNamespace().create(problem -> problem
                             .label("label")
                             .undocumented()
                             .stackLocation()

@@ -31,6 +31,13 @@ import org.gradle.api.Incubating;
 public interface Problems {
 
     /**
+     * Method to be exposed only on this interface.
+     * @return this.
+     * @since 8.6
+     */
+    Problems forDefaultNamespace();
+
+    /**
      * Configures a new problem with error severity, reports it and uses it to throw a new exception.
      * <p>
      *
