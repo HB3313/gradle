@@ -32,7 +32,7 @@ class ValidationProblemSerializationTest extends Specification {
 
     def "can serialize and deserialize a validation problem"() {
         given:
-        def problem = problems.forDefaultNamespace().create {
+        def problem = problems.forCoreNamespace().create {
             it.label("label")
                 .category("type")
         }
@@ -51,7 +51,7 @@ class ValidationProblemSerializationTest extends Specification {
 
     def "can serialize and deserialize a validation problem with a location"() {
         given:
-        def problem = problems.forDefaultNamespace().create {
+        def problem = problems.forCoreNamespace().create {
             it.label("label")
                 .fileLocation("location", 1, 2, 3)
                 .category("type")
@@ -74,7 +74,7 @@ class ValidationProblemSerializationTest extends Specification {
 
     def "can serialize and deserialize a validation problem with a documentation link"() {
         given:
-        def problem = problems.forDefaultNamespace().create {
+        def problem = problems.forCoreNamespace().create {
             it.label("label")
                 .documentedAt(new TestDocLink())
                 .fileLocation("location", 1, 1, null)
@@ -115,7 +115,7 @@ class ValidationProblemSerializationTest extends Specification {
 
     def "can serialize and deserialize a validation problem with a cause"() {
         given:
-        def problem = problems.forDefaultNamespace().create {
+        def problem = problems.forCoreNamespace().create {
             it.label("label")
                 .category("type")
                 .withException(new RuntimeException("cause"))
@@ -136,7 +136,7 @@ class ValidationProblemSerializationTest extends Specification {
 
     def "can serialize and deserialize a validation problem with a severity"(Severity severity) {
         given:
-        def problem = problems.forDefaultNamespace().create {
+        def problem = problems.forCoreNamespace().create {
             it.label("label")
                 .category("type")
                 .severity(severity)
@@ -160,7 +160,7 @@ class ValidationProblemSerializationTest extends Specification {
 
     def "can serialize and deserialize a validation problem with a solution"() {
         given:
-        def problem = problems.forDefaultNamespace().create {
+        def problem = problems.forCoreNamespace().create {
             it.label("label")
                 .category("type")
                 .solution("solution 0")
@@ -183,7 +183,7 @@ class ValidationProblemSerializationTest extends Specification {
 
     def "can serialize and deserialize a validation problem with additional data"() {
         given:
-        def problem = problems.forDefaultNamespace().create {
+        def problem = problems.forCoreNamespace().create {
             it.label("label")
                 .category("type")
                 .additionalData("key 1", "value 1")

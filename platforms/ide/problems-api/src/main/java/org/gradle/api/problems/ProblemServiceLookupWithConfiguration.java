@@ -17,26 +17,16 @@
 package org.gradle.api.problems;
 
 import org.gradle.api.Incubating;
-import org.gradle.internal.service.scopes.Scopes;
-import org.gradle.internal.service.scopes.ServiceScope;
 
 /**
- * Problems API service.
- * <p>
- * The main purpose of this API is to allow clients to create configure and report problems in a centralized way.
- * <p>
- * Reported problems are exposed via build operation progress events, which then be converted to Tooling API progress events.
+ * Extensible configuration for the accessing Problems services.
  *
- * @since 8.4
+ * @since 8.6
  */
 @Incubating
-@ServiceScope(Scopes.BuildTree.class)
-public interface Problems {
+public interface ProblemServiceLookupWithConfiguration {
 
-    /**
-     * Method to be exposed only on this interface.
-     * @return this.
-     * @since 8.6
-     */
-    ProblemReporter forNamespace(String namespace);
+    // setDefaultSeverity()
+
+    ProblemReporter createReporter();
 }

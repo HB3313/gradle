@@ -35,8 +35,8 @@ import org.gradle.api.internal.provider.DefaultProviderFactory
 import org.gradle.api.internal.provider.DefaultValueSourceProviderFactory
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.problems.ProblemEmitter
-import org.gradle.api.problems.Problems
 import org.gradle.api.problems.internal.DefaultProblems
+import org.gradle.api.problems.internal.InternalProblems
 import org.gradle.api.provider.ProviderFactory
 import org.gradle.internal.classpath.ClassPath
 import org.gradle.internal.event.DefaultListenerManager
@@ -393,7 +393,7 @@ ${nameClash { noIntro().kind('dependency bundles').inConflict('one.cool', 'oneCo
             TestUtil.objectFactory(),
             Stub(Supplier)) {
             @Override
-            protected Problems getProblemService() {
+            protected InternalProblems getProblemService() {
                 problems
             }
         }

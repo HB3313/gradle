@@ -33,6 +33,7 @@ import org.gradle.api.problems.ProblemBuilder;
 import org.gradle.api.problems.Problems;
 import org.gradle.api.problems.ReportableProblem;
 import org.gradle.api.problems.ReportableProblemBuilder;
+import org.gradle.api.problems.internal.InternalProblems;
 import org.gradle.api.provider.Provider;
 import org.gradle.api.provider.ProviderFactory;
 import org.gradle.internal.deprecation.DeprecationLogger;
@@ -68,7 +69,7 @@ public class LibrariesSourceGenerator extends AbstractSourceGenerator {
     private static final int MAX_ENTRIES = 30000;
     public static final String ERROR_HEADER = "Cannot generate dependency accessors";
     private final DefaultVersionCatalog config;
-    private final Problems problemService;
+    private final InternalProblems problemService;
 
     private final Map<String, Integer> classNameCounter = new HashMap<>();
     private final Map<ClassNode, String> classNameCache = new HashMap<>();
@@ -80,7 +81,7 @@ public class LibrariesSourceGenerator extends AbstractSourceGenerator {
     ) {
         super(writer);
         this.config = config;
-        this.problemService = problemService;
+        this.problemService = (InternalProblems) problemService;
     }
 
     public static void generateSource(
@@ -509,7 +510,7 @@ public class LibrariesSourceGenerator extends AbstractSourceGenerator {
         assertUnique(plugins, "plugins", "Plugin");
         int size = libraries.size() + bundles.size() + versions.size() + plugins.size();
         if (size > MAX_ENTRIES) {
-            throw throwVersionCatalogProblemException(problemService.forDefaultNamespace().create(builder ->
+            throw throwVersionCatalogProblemException(problemService.forCoreNamespace().create(builder ->
                 configureVersionCatalogError(builder, getProblemPrefix() + "version catalog model contains too many entries (" + size + ").", TOO_MANY_ENTRIES)
                     .details("The maximum number of aliases in a catalog is " + MAX_ENTRIES)
                     .solution("Reduce the number of aliases defined in this catalog")
@@ -542,7 +543,7 @@ public class LibrariesSourceGenerator extends AbstractSourceGenerator {
             .filter(e -> e.getValue().size() > 1)
             .map(e -> {
                 String errorValues = e.getValue().stream().sorted().collect(oxfordJoin("and"));
-                return problemService.forDefaultNamespace().create(builder ->
+                return problemService.forCoreNamespace().create(builder ->
                     configureVersionCatalogError(builder, getProblemPrefix() + prefix + " " + errorValues + " are mapped to the same accessor name get" + e.getKey() + suffix + "().", ACCESSOR_NAME_CLASH)
                         .details("A name clash was detected")
                         .solution("Use a different alias for " + errorValues));

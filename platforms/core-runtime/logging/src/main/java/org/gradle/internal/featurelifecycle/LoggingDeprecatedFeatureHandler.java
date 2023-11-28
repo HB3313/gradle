@@ -22,6 +22,7 @@ import org.gradle.api.logging.configuration.WarningMode;
 import org.gradle.api.problems.ProblemBuilder;
 import org.gradle.api.problems.ProblemBuilderSpec;
 import org.gradle.api.problems.Problems;
+import org.gradle.api.problems.internal.InternalProblems;
 import org.gradle.internal.SystemProperties;
 import org.gradle.internal.deprecation.DeprecatedFeatureUsage;
 import org.gradle.internal.logging.LoggingConfigurationBuildOptions;
@@ -86,7 +87,7 @@ public class LoggingDeprecatedFeatureHandler implements FeatureHandler<Deprecate
             }
         }
         if (problemsService != null) {
-            problemsService.forDefaultNamespace().create(new ProblemBuilderSpec() {
+            ((InternalProblems) problemsService).forCoreNamespace().create(new ProblemBuilderSpec() {
                     @Override
                     public ProblemBuilder apply(ProblemBuilder builder) {
                         ProblemBuilder problemBuilderDefiningLocation = builder.label(usage.formattedMessage())

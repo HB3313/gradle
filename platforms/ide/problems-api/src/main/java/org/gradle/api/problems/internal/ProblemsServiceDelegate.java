@@ -37,7 +37,6 @@ public class ProblemsServiceDelegate implements InternalProblemReporter {
         this.namespace = namespace;
     }
 
-    // TODO (donat) `Problems` method implementations were copied from `DefaultProblems`
     @Override
     public RuntimeException throwing(ProblemBuilderSpec action) {
         DefaultReportableProblemBuilder defaultProblemBuilder = createProblemBuilder();

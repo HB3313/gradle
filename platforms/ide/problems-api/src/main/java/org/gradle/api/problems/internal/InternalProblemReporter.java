@@ -19,7 +19,6 @@ package org.gradle.api.problems.internal;
 import org.gradle.api.problems.BasicProblemBuilder;
 import org.gradle.api.problems.Problem;
 import org.gradle.api.problems.ProblemReporter;
-import org.gradle.api.problems.Problems;
 import org.gradle.api.problems.ReportableProblem;
 import org.gradle.api.problems.ReportableProblemBuilder;
 import org.gradle.internal.service.scopes.Scopes;

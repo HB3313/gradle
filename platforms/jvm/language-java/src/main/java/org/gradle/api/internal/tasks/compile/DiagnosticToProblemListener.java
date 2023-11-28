@@ -18,6 +18,7 @@ package org.gradle.api.internal.tasks.compile;
 
 import org.gradle.api.problems.Problems;
 import org.gradle.api.problems.Severity;
+import org.gradle.api.problems.internal.InternalProblems;
 
 import javax.tools.Diagnostic;
 import javax.tools.DiagnosticListener;
@@ -31,10 +32,10 @@ import java.util.Locale;
  */
 public class DiagnosticToProblemListener implements DiagnosticListener<JavaFileObject> {
 
-    private final Problems problems;
+    private final InternalProblems problems;
 
     public DiagnosticToProblemListener(Problems problems) {
-        this.problems = problems;
+        this.problems = (InternalProblems) problems;
     }
 
     @Override
@@ -47,7 +48,7 @@ public class DiagnosticToProblemListener implements DiagnosticListener<JavaFileO
         Integer length = Math.toIntExact(diagnostic.getEndPosition() - diagnostic.getStartPosition());
         Severity severity = mapKindToSeverity(diagnostic.getKind());
 
-        problems.forDefaultNamespace().create(problem -> problem
+        problems.forCoreNamespace().create(problem -> problem
             .label(label)
             .fileLocation(resourceName, line, column, length)
             .category("compiler", "java")

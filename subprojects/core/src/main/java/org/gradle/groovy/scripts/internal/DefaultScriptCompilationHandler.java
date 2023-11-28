@@ -37,6 +37,7 @@ import org.gradle.api.problems.ProblemBuilder;
 import org.gradle.api.problems.ProblemBuilderSpec;
 import org.gradle.api.problems.Problems;
 import org.gradle.api.problems.Severity;
+import org.gradle.api.problems.internal.InternalProblems;
 import org.gradle.configuration.ImportsReader;
 import org.gradle.groovy.scripts.ScriptCompilationException;
 import org.gradle.groovy.scripts.ScriptSource;
@@ -215,7 +216,7 @@ public class DefaultScriptCompilationHandler implements ScriptCompilationHandler
         SyntaxException syntaxError = e.getErrorCollector().getSyntaxError(0);
         int lineNumber = syntaxError == null ? -1 : syntaxError.getLine();
         String message = String.format("Could not compile %s.", source.getDisplayName());
-        throw getProblemService().forDefaultNamespace().throwing(new ProblemBuilderSpec() {
+        throw ((InternalProblems)getProblemService()).forCoreNamespace().throwing(new ProblemBuilderSpec() {
             @Override
             public ProblemBuilder apply(ProblemBuilder builder) {
                 return builder

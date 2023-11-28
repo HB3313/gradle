@@ -126,7 +126,7 @@ class ProblemProgressEventCrossVersionTest extends ToolingApiSpecification {
 
                 @TaskAction
                 void run() {
-                    getProblems().forPluginNamespace("org.example.plugin").create {
+                    getProblems().forNamespace("org.example.plugin").create {
                         it.label("shortProblemMessage")
                         $documentationConfig
                         .fileLocation("/tmp/foo", 1, 2, 3)

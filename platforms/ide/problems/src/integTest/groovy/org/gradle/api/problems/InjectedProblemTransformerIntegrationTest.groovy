@@ -42,7 +42,7 @@ class InjectedProblemTransformerIntegrationTest extends AbstractIntegrationSpec 
 
                 @TaskAction
                 void run() {
-                    problems.forDefaultNamespace().create {
+                    problems.forCoreNamespace().create {
                         it.label("label")
                         .category("type")
                     }.report()
@@ -86,7 +86,7 @@ class InjectedProblemTransformerIntegrationTest extends AbstractIntegrationSpec 
                 protected abstract Problems getProblems();
 
                 public void apply(Project project) {
-                    getProblems().forDefaultNamespace().create(builder ->
+                    getProblems().forCoreNamespace().create(builder ->
                         builder
                             .label("label")
                             .category("type")
