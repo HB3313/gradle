@@ -27,13 +27,12 @@ public interface InternalProblems extends Problems {
     /**
      * Returns a new problem builder which can configure and create Problem instances.
      * <p>
-     * The builder uses a stepwise builder pattern forcing the clients to define all mandatory fields in a specific order.
-     * <p>
      * Once all mandatory fields are set, the returned type will allow clients to call {@link BasicProblemBuilder#build()} to create a new Problem instance.
      * The {@link BasicProblemBuilder#build()} method doesn't have any side effects, it just creates a new instance. Problems should be reported separately with {@link ReportableProblem#report()}.
      *
      * @return a new problem builder
      */
     ReportableProblemBuilder createProblemBuilder();
+    
     void report(Problem problem);
 }
