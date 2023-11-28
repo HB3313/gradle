@@ -30,7 +30,6 @@ import org.gradle.api.internal.attributes.ImmutableAttributesFactory;
 import org.gradle.api.internal.catalog.problems.VersionCatalogProblemId;
 import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.problems.ProblemBuilder;
-import org.gradle.api.problems.ProblemBuilderDefiningLabel;
 import org.gradle.api.problems.Problems;
 import org.gradle.api.problems.ReportableProblem;
 import org.gradle.api.problems.ReportableProblemBuilder;
@@ -523,7 +522,7 @@ public class LibrariesSourceGenerator extends AbstractSourceGenerator {
     }
 
     @Nonnull
-    private static ProblemBuilder configureVersionCatalogError(ProblemBuilderDefiningLabel builder, String message, VersionCatalogProblemId catalogProblemId) {
+    private static ProblemBuilder configureVersionCatalogError(ProblemBuilder builder, String message, VersionCatalogProblemId catalogProblemId) {
         return builder
             .label(message)
             .documentedAt(userManual(VERSION_CATALOG_PROBLEMS, catalogProblemId.name().toLowerCase()))

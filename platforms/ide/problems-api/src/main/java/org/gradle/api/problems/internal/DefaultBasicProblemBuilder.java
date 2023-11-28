@@ -16,10 +16,10 @@
 
 package org.gradle.api.problems.internal;
 
+import org.gradle.api.problems.BasicProblemBuilder;
 import org.gradle.api.problems.DocLink;
 import org.gradle.api.problems.Problem;
 import org.gradle.api.problems.Severity;
-import org.gradle.api.problems.UnboundBasicProblemBuilder;
 import org.gradle.api.problems.locations.FileLocation;
 import org.gradle.api.problems.locations.PluginIdLocation;
 import org.gradle.api.problems.locations.ProblemLocation;
@@ -35,7 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DefaultBasicProblemBuilder implements UnboundBasicProblemBuilder {
+public class DefaultBasicProblemBuilder implements BasicProblemBuilder {
 
     private String label;
     private String problemCategory;
@@ -122,79 +122,79 @@ public class DefaultBasicProblemBuilder implements UnboundBasicProblemBuilder {
         return this.severity;
     }
 
-    public UnboundBasicProblemBuilder label(String label, Object... args) {
+    public BasicProblemBuilder label(String label, Object... args) {
         this.label = String.format(label, args);
         return this;
     }
 
     @Override
-    public UnboundBasicProblemBuilder severity(Severity severity) {
+    public BasicProblemBuilder severity(Severity severity) {
         this.severity = severity;
         return this;
     }
 
-    public UnboundBasicProblemBuilder taskPathLocation(Path taskPath) {
+    public BasicProblemBuilder taskPathLocation(Path taskPath) {
         this.getLocations().add(new TaskPathLocation(taskPath));
         return this;
     }
 
-    public UnboundBasicProblemBuilder location(String path, @javax.annotation.Nullable Integer line) {
+    public BasicProblemBuilder location(String path, @javax.annotation.Nullable Integer line) {
         location(path, line, null);
         return this;
     }
 
-    public UnboundBasicProblemBuilder location(String path, @javax.annotation.Nullable Integer line, @javax.annotation.Nullable Integer column) {
+    public BasicProblemBuilder location(String path, @javax.annotation.Nullable Integer line, @javax.annotation.Nullable Integer column) {
         this.getLocations().add(new FileLocation(path, line, column, 0));
         return this;
     }
 
-    public UnboundBasicProblemBuilder fileLocation(String path, @javax.annotation.Nullable Integer line, @javax.annotation.Nullable Integer column, @javax.annotation.Nullable Integer length) {
+    public BasicProblemBuilder fileLocation(String path, @javax.annotation.Nullable Integer line, @javax.annotation.Nullable Integer column, @javax.annotation.Nullable Integer length) {
         this.getLocations().add(new FileLocation(path, line, column, length));
         return this;
     }
 
     @Override
-    public UnboundBasicProblemBuilder pluginLocation(String pluginId) {
+    public BasicProblemBuilder pluginLocation(String pluginId) {
         this.getLocations().add(new PluginIdLocation(pluginId));
         return this;
     }
 
     @Override
-    public UnboundBasicProblemBuilder stackLocation() {
+    public BasicProblemBuilder stackLocation() {
         this.collectLocation = true;
         return this;
     }
 
     @Override
-    public UnboundBasicProblemBuilder noLocation() {
+    public BasicProblemBuilder noLocation() {
         return this;
     }
 
-    public UnboundBasicProblemBuilder details(String details) {
+    public BasicProblemBuilder details(String details) {
         this.details = details;
         return this;
     }
 
-    public UnboundBasicProblemBuilder documentedAt(DocLink doc) {
+    public BasicProblemBuilder documentedAt(DocLink doc) {
         this.explicitlyUndocumented = false;
         this.docLink = doc;
         return this;
     }
 
     @Override
-    public UnboundBasicProblemBuilder undocumented() {
+    public BasicProblemBuilder undocumented() {
         this.explicitlyUndocumented = true;
         this.docLink = null;
         return this;
     }
 
     @Override
-    public UnboundBasicProblemBuilder category(String category, String... details){
+    public BasicProblemBuilder category(String category, String... details){
         this.problemCategory = DefaultProblemCategory.category(category, details).toString();
         return this;
     }
 
-    public UnboundBasicProblemBuilder solution(@Nullable String solution) {
+    public BasicProblemBuilder solution(@Nullable String solution) {
         if (this.getSolutions() == null) {
             this.solutions = new ArrayList<String>();
         }
@@ -202,7 +202,7 @@ public class DefaultBasicProblemBuilder implements UnboundBasicProblemBuilder {
         return this;
     }
 
-    public UnboundBasicProblemBuilder additionalData(String key, Object value) {
+    public BasicProblemBuilder additionalData(String key, Object value) {
         validateAdditionalDataValueType(value);
         this.getAdditionalData().put(key, value);
         return this;
@@ -215,7 +215,7 @@ public class DefaultBasicProblemBuilder implements UnboundBasicProblemBuilder {
     }
 
     @Override
-    public UnboundBasicProblemBuilder withException(RuntimeException e) {
+    public BasicProblemBuilder withException(RuntimeException e) {
         this.exception = e;
         return this;
     }

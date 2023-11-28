@@ -17,13 +17,7 @@
 package org.gradle.internal.reflect.validation;
 
 import org.gradle.api.NonNullApi;
-import org.gradle.api.problems.BasicProblemBuilder;
 import org.gradle.api.problems.DocLink;
-import org.gradle.api.problems.ProblemBuilder;
-import org.gradle.api.problems.ProblemBuilderDefiningCategory;
-import org.gradle.api.problems.ProblemBuilderDefiningDocumentation;
-import org.gradle.api.problems.ProblemBuilderDefiningLabel;
-import org.gradle.api.problems.ProblemBuilderDefiningLocation;
 import org.gradle.api.problems.ReportableProblem;
 import org.gradle.api.problems.ReportableProblemBuilder;
 import org.gradle.api.problems.Severity;
@@ -31,42 +25,37 @@ import org.gradle.api.problems.Severity;
 import javax.annotation.Nullable;
 
 @NonNullApi
-class DelegatingReportableProblemBuilder implements
-    ProblemBuilderDefiningLabel,
-    ProblemBuilderDefiningDocumentation,
-    ProblemBuilderDefiningLocation,
-    ProblemBuilderDefiningCategory,
-    BasicProblemBuilder {
+class DelegatingReportableProblemBuilder implements ReportableProblemBuilder {
 
-    private final ProblemBuilderDefiningLabel delegate;
+    private final ReportableProblemBuilder delegate;
 
-    DelegatingReportableProblemBuilder(ProblemBuilderDefiningLabel delegate) {
+    DelegatingReportableProblemBuilder(ReportableProblemBuilder delegate) {
         this.delegate = delegate;
     }
 
     @Override
-    public ProblemBuilderDefiningDocumentation label(String label, Object... args) {
+    public ReportableProblemBuilder label(String label, Object... args) {
         return validateDelegate(delegate).label(label, args);
     }
 
     @Override
-    public ProblemBuilderDefiningLocation documentedAt(DocLink doc) {
-        return validateDelegate(((ProblemBuilderDefiningDocumentation) delegate).documentedAt(doc));
+    public ReportableProblemBuilder documentedAt(DocLink doc) {
+        return validateDelegate(delegate.documentedAt(doc));
     }
 
     @Override
-    public ProblemBuilderDefiningLocation undocumented() {
-        return validateDelegate(((ProblemBuilderDefiningDocumentation) delegate).undocumented());
+    public ReportableProblemBuilder undocumented() {
+        return validateDelegate(delegate.undocumented());
     }
 
     @Override
-    public ProblemBuilderDefiningCategory fileLocation(String path, @Nullable Integer line, @Nullable Integer column, @Nullable Integer length) {
-        return validateDelegate(((ProblemBuilderDefiningLocation) delegate).fileLocation(path, line, column, length));
+    public ReportableProblemBuilder fileLocation(String path, @Nullable Integer line, @Nullable Integer column, @Nullable Integer length) {
+        return validateDelegate(delegate.fileLocation(path, line, column, length));
     }
 
     @Override
-    public ProblemBuilderDefiningCategory pluginLocation(String pluginId) {
-        return validateDelegate(((ProblemBuilderDefiningLocation) delegate).pluginLocation(pluginId));
+    public ReportableProblemBuilder pluginLocation(String pluginId) {
+        return validateDelegate(delegate.pluginLocation(pluginId));
     }
 
     private <T> T validateDelegate(T newDelegate) {
@@ -77,48 +66,47 @@ class DelegatingReportableProblemBuilder implements
     }
 
     @Override
-    public ProblemBuilderDefiningCategory stackLocation() {
-        return validateDelegate(((ProblemBuilderDefiningLocation) delegate).stackLocation());
+    public ReportableProblemBuilder stackLocation() {
+        return validateDelegate(delegate.stackLocation());
     }
 
     @Override
-    public ProblemBuilderDefiningCategory noLocation() {
-        return validateDelegate(((ProblemBuilderDefiningLocation) delegate).noLocation());
+    public ReportableProblemBuilder noLocation() {
+        return validateDelegate(delegate.noLocation());
     }
 
     @Override
-    public ProblemBuilder category(String category, String... details){
-        return validateDelegate(((ProblemBuilderDefiningCategory) delegate).category(category, details));
+    public ReportableProblemBuilder category(String category, String... details){
+        return validateDelegate(delegate.category(category, details));
     }
 
     @Override
-    public ProblemBuilder details(String details) {
-        return validateDelegate(((BasicProblemBuilder) delegate).details(details));
+    public ReportableProblemBuilder details(String details) {
+        return validateDelegate(delegate.details(details));
     }
 
     @Override
     public ReportableProblemBuilder solution(@Nullable String solution) {
-        return (ReportableProblemBuilder) validateDelegate(((BasicProblemBuilder) delegate).solution(solution));
+        return validateDelegate(delegate.solution(solution));
     }
 
     @Override
     public ReportableProblemBuilder additionalData(String key, Object value) {
-        return (ReportableProblemBuilder) validateDelegate(((BasicProblemBuilder) delegate).additionalData(key, value));
+        return validateDelegate(delegate.additionalData(key, value));
     }
 
     @Override
     public ReportableProblemBuilder withException(RuntimeException e) {
-        return (ReportableProblemBuilder) validateDelegate(((BasicProblemBuilder) delegate).withException(e));
+        return validateDelegate(delegate.withException(e));
     }
 
     @Override
-    public ReportableProblemBuilder severity(@Nullable Severity severity) {
-        ProblemBuilder newDelegate = ((ReportableProblemBuilder) delegate).severity(severity);
-        return (ReportableProblemBuilder) validateDelegate(newDelegate);
+    public ReportableProblemBuilder severity(Severity severity) {
+        return validateDelegate(delegate.severity(severity));
     }
 
     @Override
     public ReportableProblem build() {
-        return ((ReportableProblemBuilder) delegate).build();
+        return delegate.build();
     }
 }

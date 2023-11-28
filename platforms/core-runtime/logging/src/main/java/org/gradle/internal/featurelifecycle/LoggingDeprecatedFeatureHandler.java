@@ -20,9 +20,6 @@ import org.gradle.api.GradleException;
 import org.gradle.api.internal.DocumentationRegistry;
 import org.gradle.api.logging.configuration.WarningMode;
 import org.gradle.api.problems.ProblemBuilder;
-import org.gradle.api.problems.ProblemBuilderDefiningCategory;
-import org.gradle.api.problems.ProblemBuilderDefiningLabel;
-import org.gradle.api.problems.ProblemBuilderDefiningLocation;
 import org.gradle.api.problems.ProblemBuilderSpec;
 import org.gradle.api.problems.Problems;
 import org.gradle.internal.SystemProperties;
@@ -91,8 +88,8 @@ public class LoggingDeprecatedFeatureHandler implements FeatureHandler<Deprecate
         if (problemsService != null) {
             problemsService.create(new ProblemBuilderSpec() {
                     @Override
-                    public ProblemBuilder apply(ProblemBuilderDefiningLabel builder) {
-                        ProblemBuilderDefiningLocation problemBuilderDefiningLocation = builder.label(usage.formattedMessage())
+                    public ProblemBuilder apply(ProblemBuilder builder) {
+                        ProblemBuilder problemBuilderDefiningLocation = builder.label(usage.formattedMessage())
                             .documentedAt(usage.getDocumentationUrl());
                         return addPossibleLocation(diagnostics, problemBuilderDefiningLocation)
                             // TODO (donat) we can further categorize deprecation warnings https://github.com/gradle/gradle/issues/26928
@@ -105,7 +102,7 @@ public class LoggingDeprecatedFeatureHandler implements FeatureHandler<Deprecate
         fireDeprecatedUsageBuildOperationProgress(usage, diagnostics);
     }
 
-    private static ProblemBuilderDefiningCategory addPossibleLocation(ProblemDiagnostics diagnostics, ProblemBuilderDefiningLocation genericDeprecation) {
+    private static ProblemBuilder addPossibleLocation(ProblemDiagnostics diagnostics, ProblemBuilder genericDeprecation) {
         Location location = diagnostics.getLocation();
         if (location == null) {
             return genericDeprecation.noLocation();

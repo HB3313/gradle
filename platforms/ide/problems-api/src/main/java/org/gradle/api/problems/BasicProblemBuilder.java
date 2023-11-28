@@ -18,6 +18,8 @@ package org.gradle.api.problems;
 
 import org.gradle.api.Incubating;
 
+import javax.annotation.Nullable;
+
 /**
  * {@link Problem} instance builder allowing the specification of all optional fields.
  *
@@ -38,10 +40,89 @@ import org.gradle.api.Incubating;
  */
 @Incubating
 public interface BasicProblemBuilder extends ProblemBuilder {
+
     /**
      * Creates the new problem. Calling {@link #build()} won't report the problem via build operations, it can be done separately by calling {@link ReportableProblem#report()}.
      *
      * @return the new problem
      */
     Problem build();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    BasicProblemBuilder label(String label, Object... args);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    BasicProblemBuilder category(String category, String... details);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    BasicProblemBuilder documentedAt(DocLink doc);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    BasicProblemBuilder undocumented();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    BasicProblemBuilder fileLocation(String path, @Nullable Integer line, @Nullable Integer column, @Nullable Integer length);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    BasicProblemBuilder pluginLocation(String pluginId);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    BasicProblemBuilder stackLocation();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    BasicProblemBuilder noLocation();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    BasicProblemBuilder details(String details);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    BasicProblemBuilder solution(String solution);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    BasicProblemBuilder additionalData(String key, Object value);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    BasicProblemBuilder withException(RuntimeException e);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    BasicProblemBuilder severity(Severity severity);
 }

@@ -26,9 +26,6 @@ import org.gradle.api.artifacts.MutableVersionConstraint;
 import org.gradle.api.initialization.dsl.VersionCatalogBuilder;
 import org.gradle.api.internal.catalog.problems.VersionCatalogProblemId;
 import org.gradle.api.problems.ProblemBuilder;
-import org.gradle.api.problems.ProblemBuilderDefiningCategory;
-import org.gradle.api.problems.ProblemBuilderDefiningLabel;
-import org.gradle.api.problems.ProblemBuilderDefiningLocation;
 import org.gradle.api.problems.Problems;
 import org.gradle.api.problems.ReportableProblem;
 import org.gradle.util.internal.TextUtil;
@@ -141,15 +138,15 @@ public class TomlCatalogFileParser {
     }
 
     @Nonnull
-    private static ProblemBuilder configureVersionCatalogError(ProblemBuilderDefiningLabel builder, String message, VersionCatalogProblemId catalogProblemId) {
-        return configureVersionCatalogError(builder, message, catalogProblemId, ProblemBuilderDefiningLocation::noLocation);
+    private static ProblemBuilder configureVersionCatalogError(ProblemBuilder builder, String message, VersionCatalogProblemId catalogProblemId) {
+        return configureVersionCatalogError(builder, message, catalogProblemId, ProblemBuilder::noLocation);
     }
 
-    private static ProblemBuilder configureVersionCatalogError(ProblemBuilderDefiningLabel builder, String message, VersionCatalogProblemId catalogProblemId, Function<ProblemBuilderDefiningLocation, ProblemBuilderDefiningCategory> locationDefiner) {
-        ProblemBuilderDefiningLocation definingLocation = builder
+    private static ProblemBuilder configureVersionCatalogError(ProblemBuilder builder, String message, VersionCatalogProblemId catalogProblemId, Function<ProblemBuilder, ProblemBuilder> locationDefiner) {
+        ProblemBuilder definingLocation = builder
             .label(message)
             .documentedAt(userManual(VERSION_CATALOG_PROBLEMS, catalogProblemId.name().toLowerCase()));
-        ProblemBuilderDefiningCategory definingCategory = locationDefiner.apply(definingLocation);
+        ProblemBuilder definingCategory = locationDefiner.apply(definingLocation);
         return definingCategory
             .category("dependency-version-catalog", TextUtil.screamingSnakeToKebabCase(catalogProblemId.name()))
             .severity(ERROR);

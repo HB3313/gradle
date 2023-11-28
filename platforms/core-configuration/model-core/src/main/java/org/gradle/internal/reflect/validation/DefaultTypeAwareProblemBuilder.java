@@ -17,7 +17,7 @@
 package org.gradle.internal.reflect.validation;
 
 import org.gradle.api.NonNullApi;
-import org.gradle.api.problems.ProblemBuilderDefiningLabel;
+import org.gradle.api.problems.ReportableProblemBuilder;
 
 import javax.annotation.Nullable;
 
@@ -32,7 +32,7 @@ public class DefaultTypeAwareProblemBuilder extends DelegatingReportableProblemB
     public static final String PROPERTY_NAME = "propertyName";
     public static final String TYPE_IS_IRRELEVANT_IN_ERROR_MESSAGE = "typeIsIrrelevantInErrorMessage";
 
-    public DefaultTypeAwareProblemBuilder(ProblemBuilderDefiningLabel problemBuilder) {
+    public DefaultTypeAwareProblemBuilder(ReportableProblemBuilder problemBuilder) {
         super(problemBuilder);
     }
 

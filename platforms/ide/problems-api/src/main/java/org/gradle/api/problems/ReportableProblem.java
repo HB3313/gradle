@@ -37,5 +37,5 @@ public interface ReportableProblem extends Problem {
      * @return a builder
      * @since 8.6
      */
-    UnboundReportableProblemBuilder toBuilder();
+    ReportableProblemBuilder toBuilder();
 }

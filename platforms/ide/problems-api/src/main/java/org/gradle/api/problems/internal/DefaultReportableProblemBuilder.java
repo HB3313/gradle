@@ -19,8 +19,8 @@ package org.gradle.api.problems.internal;
 import org.gradle.api.Incubating;
 import org.gradle.api.problems.DocLink;
 import org.gradle.api.problems.ReportableProblem;
+import org.gradle.api.problems.ReportableProblemBuilder;
 import org.gradle.api.problems.Severity;
-import org.gradle.api.problems.UnboundReportableProblemBuilder;
 
 import javax.annotation.Nullable;
 
@@ -30,7 +30,7 @@ import javax.annotation.Nullable;
  * @since 8.3
  */
 @Incubating
-public class DefaultReportableProblemBuilder extends DefaultBasicProblemBuilder implements UnboundReportableProblemBuilder {
+public class DefaultReportableProblemBuilder extends DefaultBasicProblemBuilder implements ReportableProblemBuilder {
 
     private final InternalProblems problemsService;
 
@@ -63,83 +63,83 @@ public class DefaultReportableProblemBuilder extends DefaultBasicProblemBuilder 
     }
 
 
-    public UnboundReportableProblemBuilder label(String label, Object... args) {
+    public ReportableProblemBuilder label(String label, Object... args) {
         super.label(label, args);
         return this;
     }
 
     @Override
-    public UnboundReportableProblemBuilder severity(Severity severity) {
+    public ReportableProblemBuilder severity(Severity severity) {
         super.severity(severity);
         return this;
     }
 
-    public UnboundReportableProblemBuilder location(String path, @javax.annotation.Nullable Integer line) {
+    public ReportableProblemBuilder location(String path, @javax.annotation.Nullable Integer line) {
         location(path, line, null);
         return this;
     }
 
-    public UnboundReportableProblemBuilder location(String path, @javax.annotation.Nullable Integer line, @javax.annotation.Nullable Integer column) {
+    public ReportableProblemBuilder location(String path, @javax.annotation.Nullable Integer line, @javax.annotation.Nullable Integer column) {
         super.location(path, line, column);
         return this;
     }
 
-    public UnboundReportableProblemBuilder fileLocation(String path, @javax.annotation.Nullable Integer line, @javax.annotation.Nullable Integer column, @javax.annotation.Nullable Integer length) {
+    public ReportableProblemBuilder fileLocation(String path, @javax.annotation.Nullable Integer line, @javax.annotation.Nullable Integer column, @javax.annotation.Nullable Integer length) {
         super.fileLocation(path, line, column, length);
         return this;
     }
 
     @Override
-    public UnboundReportableProblemBuilder pluginLocation(String pluginId) {
+    public ReportableProblemBuilder pluginLocation(String pluginId) {
         super.pluginLocation(pluginId);
         return this;
     }
 
     @Override
-    public UnboundReportableProblemBuilder stackLocation() {
+    public ReportableProblemBuilder stackLocation() {
         super.stackLocation();
         return this;
     }
 
     @Override
-    public UnboundReportableProblemBuilder noLocation() {
+    public ReportableProblemBuilder noLocation() {
         return this;
     }
 
-    public UnboundReportableProblemBuilder details(String details) {
+    public ReportableProblemBuilder details(String details) {
         super.details(details);
         return this;
     }
 
-    public UnboundReportableProblemBuilder documentedAt(DocLink doc) {
+    public ReportableProblemBuilder documentedAt(DocLink doc) {
         super.documentedAt(doc);
         return this;
     }
 
     @Override
-    public UnboundReportableProblemBuilder undocumented() {
+    public ReportableProblemBuilder undocumented() {
         super.undocumented();
         return this;
     }
 
     @Override
-    public UnboundReportableProblemBuilder category(String category, String... details){
+    public ReportableProblemBuilder category(String category, String... details){
         super.category(category, details);
         return this;
     }
 
-    public UnboundReportableProblemBuilder solution(@Nullable String solution) {
+    public ReportableProblemBuilder solution(@Nullable String solution) {
         super.solution(solution);
         return this;
     }
 
-    public UnboundReportableProblemBuilder additionalData(String key, Object value) {
+    public ReportableProblemBuilder additionalData(String key, Object value) {
         super.additionalData(key, value);
         return this;
     }
 
     @Override
-    public UnboundReportableProblemBuilder withException(RuntimeException e) {
+    public ReportableProblemBuilder withException(RuntimeException e) {
         super.withException(e);
         return this;
     }

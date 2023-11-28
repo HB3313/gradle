@@ -104,5 +104,5 @@ public interface Problem {
      * @since 8.6
      */
     @Incubating
-    UnboundBasicProblemBuilder toBuilder();
+    BasicProblemBuilder toBuilder();
 }

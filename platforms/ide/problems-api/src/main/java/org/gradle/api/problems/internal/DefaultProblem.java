@@ -19,11 +19,11 @@ package org.gradle.api.problems.internal;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import org.gradle.api.NonNullApi;
+import org.gradle.api.problems.BasicProblemBuilder;
 import org.gradle.api.problems.DocLink;
 import org.gradle.api.problems.Problem;
 import org.gradle.api.problems.ProblemCategory;
 import org.gradle.api.problems.Severity;
-import org.gradle.api.problems.UnboundBasicProblemBuilder;
 import org.gradle.api.problems.locations.ProblemLocation;
 import org.gradle.internal.operations.OperationIdentifier;
 
@@ -132,7 +132,7 @@ public class DefaultProblem implements Problem, Serializable {
     }
 
     @Override
-    public UnboundBasicProblemBuilder toBuilder() {
+    public BasicProblemBuilder toBuilder() {
         return new DefaultBasicProblemBuilder(this);
     }
 

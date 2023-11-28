@@ -41,5 +41,11 @@ import org.gradle.api.Incubating;
 @Incubating
 public interface ProblemBuilderSpec {
 
-    ProblemBuilder apply(ProblemBuilderDefiningLabel builder);
+    /**
+     * Spec method.
+     * @param builder the target builder to configure.
+     * @return the builder
+     * @since 8.6
+     */
+    ProblemBuilder apply(ProblemBuilder builder);
 }

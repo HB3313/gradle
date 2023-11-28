@@ -19,8 +19,8 @@ package org.gradle.api.problems.internal;
 import org.gradle.api.NonNullApi;
 import org.gradle.api.problems.DocLink;
 import org.gradle.api.problems.ReportableProblem;
+import org.gradle.api.problems.ReportableProblemBuilder;
 import org.gradle.api.problems.Severity;
-import org.gradle.api.problems.UnboundReportableProblemBuilder;
 import org.gradle.api.problems.locations.ProblemLocation;
 import org.gradle.internal.operations.OperationIdentifier;
 
@@ -70,7 +70,7 @@ public class DefaultReportableProblem extends DefaultProblem implements Reportab
     }
 
     @Override
-    public UnboundReportableProblemBuilder toBuilder() {
+    public ReportableProblemBuilder toBuilder() {
         return new DefaultReportableProblemBuilder(problemService, this);
     }
 

@@ -18,6 +18,8 @@ package org.gradle.api.problems;
 
 import org.gradle.api.Incubating;
 
+import javax.annotation.Nullable;
+
 /**
  * {@link Problem} instance builder allowing the specification of all optional fields.
  *
@@ -38,10 +40,89 @@ import org.gradle.api.Incubating;
  */
 @Incubating
 public interface ReportableProblemBuilder extends BasicProblemBuilder {
+
     /**
      * Creates the new problem. Calling {@link #build()} won't report the problem via build operations, it can be done separately by calling {@link ReportableProblem#report()}.
      *
      * @return the new problem
      */
     ReportableProblem build();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    ReportableProblemBuilder label(String label, Object... args);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    ReportableProblemBuilder category(String category, String... details);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    ReportableProblemBuilder documentedAt(DocLink doc);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    ReportableProblemBuilder undocumented();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    ReportableProblemBuilder fileLocation(String path, @Nullable Integer line, @Nullable Integer column, @Nullable Integer length);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    ReportableProblemBuilder pluginLocation(String pluginId);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    ReportableProblemBuilder stackLocation();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    ReportableProblemBuilder noLocation();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    ReportableProblemBuilder details(String details);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    ReportableProblemBuilder solution(String solution);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    ReportableProblemBuilder additionalData(String key, Object value);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    ReportableProblemBuilder withException(RuntimeException e);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    ReportableProblemBuilder severity(Severity severity);
 }

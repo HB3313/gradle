@@ -18,9 +18,9 @@ package org.gradle.api.problems.internal;
 
 import org.gradle.api.problems.BasicProblemBuilder;
 import org.gradle.api.problems.Problem;
-import org.gradle.api.problems.ProblemBuilderDefiningLabel;
 import org.gradle.api.problems.Problems;
 import org.gradle.api.problems.ReportableProblem;
+import org.gradle.api.problems.ReportableProblemBuilder;
 
 public interface InternalProblems extends Problems {
 
@@ -34,6 +34,6 @@ public interface InternalProblems extends Problems {
      *
      * @return a new problem builder
      */
-    ProblemBuilderDefiningLabel createProblemBuilder();
+    ReportableProblemBuilder createProblemBuilder();
     void report(Problem problem);
 }
